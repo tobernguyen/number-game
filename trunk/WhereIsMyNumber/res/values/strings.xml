@@ -7,5 +7,6 @@
     <string name="title_activity_select_play_type">Select Play Type</string>
     <string name="title_activity_select_difficult_level">Select Difficult Level</string>
     <string name="title_activity_play">Play</string>
+    <string name="chronometer_initial_format">Initial format:<xliff:g id="initial-format">%</xliff:g></string>
 
 </resources>

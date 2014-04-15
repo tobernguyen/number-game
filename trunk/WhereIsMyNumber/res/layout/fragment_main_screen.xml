@@ -10,12 +10,15 @@
 
     <Button
         android:id="@+id/playButton"
+        android:src="@drawable/play_button_up"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="94dp"
-        android:text="Play" />
+        android:padding="0dp"
+        android:background="@drawable/button_play_press"
+        />
 
     <Button
         android:id="@+id/highScoreButton"
@@ -24,6 +27,6 @@
         android:layout_below="@+id/playButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
-        android:text="High Scores" />
+        android:background="@drawable/button_highscore_press" />
 
 </RelativeLayout>

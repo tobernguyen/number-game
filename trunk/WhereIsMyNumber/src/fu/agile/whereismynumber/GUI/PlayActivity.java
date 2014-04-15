@@ -3,6 +3,8 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.database.Cursor;
+import android.database.SQLException;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +54,14 @@ public class PlayActivity extends ActionBarActivity {
 		int index = 0;
 		ArrayList<Number> listNumberDisplay = new ArrayList<Number>();
 		ArrayList<Number> listNumberTarget = new ArrayList<Number>();
+		// The method of android to display stop watch
+		private Chronometer mChronometer;
+		// Identify the game start or end to control
+		private Boolean isPlay;
+		// Varialable of score time
+		private long score;
+		// variable to display highscore
+		private long highscore;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,10 +69,11 @@ public class PlayActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_play, container,
 					false);
 
-			// TextView testTextView = (TextView)
-			// rootView.findViewById(R.id.testTextView);
-			// testTextView.setText("Play type: " + play_type +
-			// " Difficult level: " + difficult_level);
+			// Identify the game play
+			isPlay = true;
+			// Variable of Chronometer
+			mChronometer = (Chronometer) rootView
+					.findViewById(R.id.targetNumberTextView);
 
 			// Tao ra mot day so random de bat nguoi dung chon
 			for (int i = 1; i <= 48; i++) {
@@ -92,15 +104,15 @@ public class PlayActivity extends ActionBarActivity {
 				@Override
 				public void onItemClick(AdapterView<?> arg0, View view,
 						int position, long id) {
-					
-					//Lay phan tu nguoi dung click vao
+
+					// Lay phan tu nguoi dung click vao
 					Number clickedNumber = (Number) numbers_adapter
 							.getItem(position);
 					if (clickedNumber.equals(listNumberTarget.get(index))) {
-						//Tang index
+						// Tang index
 						nextTargetNumber();
 						try {
-							//Hieu ung cho target number
+							// Hieu ung cho target number
 							Animation slide_left_out = AnimationUtils
 									.loadAnimation(getActivity(),
 											R.anim.slide_out_left);
@@ -113,7 +125,7 @@ public class PlayActivity extends ActionBarActivity {
 							targetNumberTextView.startAnimation(slide_right_in);
 
 						} catch (IndexOutOfBoundsException e) {
-							//Hoan thanh phan choi
+							// Hoan thanh phan choi
 							Toast.makeText(getActivity(), "Completed",
 									Toast.LENGTH_SHORT).show();
 						}
@@ -121,6 +133,30 @@ public class PlayActivity extends ActionBarActivity {
 				}
 			});
 
+			if (isPlay) {
+				mChronometer.start();
+			} else {
+				mChronometer.stop();
+				// Lay thoi gian cua lan choi do
+				score = mChronometer.getBase();
+				// Tao bien dien de quan ly truy cap vao database
+				DatabaseAdapter db = new DatabaseAdapter(getActivity());
+				try {
+					db.open();
+					// Lay du lieu tu bang du lieu o dong 1
+					Cursor c = db.getRecord(1);
+					// Lay diem so highscore tu bang du lieu
+					highscore = Long.parseLong(c.toString());
+					if (score >= highscore) {
+						db.insertRecord(score);
+					} else {
+
+					}
+				} catch (SQLException sqle) {
+					throw sqle;
+				}
+
+			}
 			return rootView;
 		}
 
