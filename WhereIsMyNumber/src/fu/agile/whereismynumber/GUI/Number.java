@@ -21,6 +21,7 @@ public class Number{
 		this.isTicked = isTicked;
 	}
 	
+	@Override
 	public String toString(){
 		return ""+number;
 	}
