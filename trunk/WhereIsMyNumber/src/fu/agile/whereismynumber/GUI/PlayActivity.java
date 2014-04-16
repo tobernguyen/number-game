@@ -73,7 +73,7 @@ public class PlayActivity extends ActionBarActivity {
 			isPlay = true;
 			// Variable of Chronometer
 			mChronometer = (Chronometer) rootView
-					.findViewById(R.id.targetNumberTextView);
+					.findViewById(R.id.chronometer);
 
 			// Tao ra mot day so random de bat nguoi dung chon
 			for (int i = 1; i <= 48; i++) {
