@@ -24,9 +24,6 @@ import fu.agile.whereismynumber.R;
 
 public class PlayActivity extends ActionBarActivity {
 
-	private static int play_type = 0;
-	private static int difficult_level = 0;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,26 +37,30 @@ public class PlayActivity extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 
-		Bundle game_setting = getIntent().getBundleExtra("GAME_SETTING");
-		play_type = game_setting.getInt("PLAY_TYPE");
-		difficult_level = game_setting.getInt("DIFFICULT_LEVEL");
-
 	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+
+		// Bundle for game setting, get from MainScreen
+		Bundle game_setting;
+
+		// Index for next target number
 		int index = 0;
+
+		// Initiate Array of Number to play
 		ArrayList<Number> listNumberDisplay = new ArrayList<Number>();
 		ArrayList<Number> listNumberTarget = new ArrayList<Number>();
+
 		// The method of android to display stop watch
 		private Chronometer mChronometer;
 
-		// Varialable of score time
+		// Variable of score time
 		private long time;
 		// variable to display highscore
-		private int highscore,score;
+		private int highscore, score;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,7 +72,16 @@ public class PlayActivity extends ActionBarActivity {
 					.findViewById(R.id.chronometer);
 
 			// Tao ra mot day so random de bat nguoi dung chon
-			for (int i = 1; i <= 4; i++) {
+			game_setting = getActivity().getIntent().getBundleExtra(
+					"GAME_SETTING");
+			int amountOfNumbers = game_setting.getInt("A", 6)
+					* game_setting.getInt("B", 8);
+
+			// Number of column in matrix
+			int numberOfColumns = game_setting.getInt("A", 6);
+
+			// Set default number
+			for (int i = 1; i <= amountOfNumbers; i++) {
 				listNumberDisplay.add(new Number(i));
 				listNumberTarget.add(new Number(i));
 			}
@@ -82,12 +92,14 @@ public class PlayActivity extends ActionBarActivity {
 
 			// Xu ly GridNumber
 			final NumberAdapter numbers_adapter = new NumberAdapter(
-					getActivity(), listNumberDisplay);
+					getActivity(), listNumberDisplay, numberOfColumns);
 			GridView gridNumber = (GridView) rootView
 					.findViewById(R.id.gridView);
 			gridNumber.setAdapter(numbers_adapter);
+
 			// Cho dong ho chay
 			mChronometer.start();
+
 			// Xu ly target number
 			final TextView targetNumberTextView = (TextView) rootView
 					.findViewById(R.id.targetNumberTextView);
@@ -121,16 +133,18 @@ public class PlayActivity extends ActionBarActivity {
 							targetNumberTextView.startAnimation(slide_right_in);
 
 						} catch (IndexOutOfBoundsException e) {
-							
+
 							// Lua vao database
 							mChronometer.stop();
 							// Lay thoi gian cua lan choi do
-							time = SystemClock.elapsedRealtime() - mChronometer.getBase();
+							time = SystemClock.elapsedRealtime()
+									- mChronometer.getBase();
 							int hours = (int) (time / 3600000);
 							int minutes = (int) (time - hours * 3600000) / 60000;
 							int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
-							
-							Toast.makeText(getActivity(), "Completed:" +minutes+":"+ seconds,
+
+							Toast.makeText(getActivity(),
+									"Completed:" + minutes + ":" + seconds,
 									Toast.LENGTH_SHORT).show();
 						}
 					}

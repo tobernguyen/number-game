@@ -9,18 +9,6 @@
     tools:context="fu.agile.whereismynumber.MainScreen$PlaceholderFragment" >
 
     <Button
-        android:id="@+id/playButton"
-        android:src="@drawable/play_button_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="94dp"
-        android:padding="0dp"
-        android:background="@drawable/button_play_press"
-        />
-
-    <Button
         android:id="@+id/highScoreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,5 +16,48 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="33dp"
         android:background="@drawable/button_highscore_press" />
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/highScoreButton"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/button_play_press"
+        android:padding="0dp"
+        android:src="@drawable/play_button_up" />
+
+    <RadioGroup
+        android:id="@+id/playSize_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/highScoreButton"
+        android:layout_alignRight="@+id/highScoreButton"
+        android:layout_below="@+id/highScoreButton"
+        android:layout_marginTop="47dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/play_6x6_rbtn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            
+
+            android:gravity="center_vertical|center_horizontal"
+            android:text="6x6" />
+
+        <RadioButton
+            android:id="@+id/play_6x8_rbtn"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="5dp"
+     
+
+            android:checked="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="6x8" />
+    </RadioGroup>
 
 </RelativeLayout>
