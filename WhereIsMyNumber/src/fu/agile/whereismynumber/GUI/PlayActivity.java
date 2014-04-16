@@ -25,6 +25,7 @@ import fu.agile.whereismynumber.R;
 
 public class PlayActivity extends ActionBarActivity {
 	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -62,7 +63,8 @@ public class PlayActivity extends ActionBarActivity {
 		private long time;
 		// variable to display highscore
 		private int highscore, score;
-		
+		//Tao bien de store data
+		private StoreData store;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,6 +74,7 @@ public class PlayActivity extends ActionBarActivity {
 			// Variable of Chronometer
 			mChronometer = (Chronometer) rootView
 					.findViewById(R.id.chronometer);
+			
 
 			// Tao ra mot day so random de bat nguoi dung chon
 			game_setting = getActivity().getIntent().getBundleExtra(
@@ -83,7 +86,7 @@ public class PlayActivity extends ActionBarActivity {
 			int numberOfColumns = game_setting.getInt("A", 6);
 
 			// Set default number
-			for (int i = 1; i <= amountOfNumbers; i++) {
+			for (int i = 1; i <= 4; i++) {
 				listNumberDisplay.add(new Number(i));
 				listNumberTarget.add(new Number(i));
 			}
@@ -148,7 +151,13 @@ public class PlayActivity extends ActionBarActivity {
 							Toast.makeText(getActivity(),
 									"Completed:" + minutes + ":" + seconds,
 									Toast.LENGTH_SHORT).show();
-							
+							score = seconds + minutes *60;
+							store = new StoreData(getActivity());
+							store.setHighscore(score);
+							highscore = store.getHighscore();
+							Toast.makeText(getActivity(),
+									"Highscore:" + highscore,
+									Toast.LENGTH_SHORT).show();
 							
 						}
 					}
