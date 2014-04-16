@@ -3,9 +3,8 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.database.Cursor;
-import android.database.SQLException;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -56,27 +55,23 @@ public class PlayActivity extends ActionBarActivity {
 		ArrayList<Number> listNumberTarget = new ArrayList<Number>();
 		// The method of android to display stop watch
 		private Chronometer mChronometer;
-		// Identify the game start or end to control
-		private Boolean isPlay;
+
 		// Varialable of score time
-		private long score;
+		private long time;
 		// variable to display highscore
-		private long highscore;
+		private int highscore,score;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_play, container,
 					false);
-
-			// Identify the game play
-			isPlay = true;
 			// Variable of Chronometer
 			mChronometer = (Chronometer) rootView
 					.findViewById(R.id.chronometer);
 
 			// Tao ra mot day so random de bat nguoi dung chon
-			for (int i = 1; i <= 48; i++) {
+			for (int i = 1; i <= 4; i++) {
 				listNumberDisplay.add(new Number(i));
 				listNumberTarget.add(new Number(i));
 			}
@@ -91,7 +86,8 @@ public class PlayActivity extends ActionBarActivity {
 			GridView gridNumber = (GridView) rootView
 					.findViewById(R.id.gridView);
 			gridNumber.setAdapter(numbers_adapter);
-
+			// Cho dong ho chay
+			mChronometer.start();
 			// Xu ly target number
 			final TextView targetNumberTextView = (TextView) rootView
 					.findViewById(R.id.targetNumberTextView);
@@ -125,38 +121,22 @@ public class PlayActivity extends ActionBarActivity {
 							targetNumberTextView.startAnimation(slide_right_in);
 
 						} catch (IndexOutOfBoundsException e) {
-							// Hoan thanh phan choi
-							Toast.makeText(getActivity(), "Completed",
+							
+							// Lua vao database
+							mChronometer.stop();
+							// Lay thoi gian cua lan choi do
+							time = SystemClock.elapsedRealtime() - mChronometer.getBase();
+							int hours = (int) (time / 3600000);
+							int minutes = (int) (time - hours * 3600000) / 60000;
+							int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
+							
+							Toast.makeText(getActivity(), "Completed:" +minutes+":"+ seconds,
 									Toast.LENGTH_SHORT).show();
 						}
 					}
 				}
 			});
 
-			if (isPlay) {
-				mChronometer.start();
-			} else {
-				mChronometer.stop();
-				// Lay thoi gian cua lan choi do
-				score = mChronometer.getBase();
-				// Tao bien dien de quan ly truy cap vao database
-				DatabaseAdapter db = new DatabaseAdapter(getActivity());
-				try {
-					db.open();
-					// Lay du lieu tu bang du lieu o dong 1
-					Cursor c = db.getRecord(1);
-					// Lay diem so highscore tu bang du lieu
-					highscore = Long.parseLong(c.toString());
-					if (score >= highscore) {
-						db.insertRecord(score);
-					} else {
-
-					}
-				} catch (SQLException sqle) {
-					throw sqle;
-				}
-
-			}
 			return rootView;
 		}
 
