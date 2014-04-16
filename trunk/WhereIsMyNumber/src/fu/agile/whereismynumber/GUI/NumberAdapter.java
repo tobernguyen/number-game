@@ -3,7 +3,6 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import fu.agile.whereismynumber.R;
 import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
@@ -12,14 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import fu.agile.whereismynumber.R;
 
 public class NumberAdapter extends BaseAdapter{
 
 	private Context context;
 	private ArrayList<Number> numbers;
-	private int screen_height, screen_width;
+	private int screen_width, cellSize;
 	
-	public NumberAdapter(Context context, ArrayList<Number> numbers) {
+	public NumberAdapter(Context context, ArrayList<Number> numbers, int numberOfColumns) {
 		super();
 		this.context = context;
 		
@@ -33,6 +33,9 @@ public class NumberAdapter extends BaseAdapter{
 		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
 		
 		screen_width = displaymetrics.widthPixels;
+		
+		//Tuy chinh cellSize dua theo kich thuoc man hinh va so cot
+		cellSize = screen_width/numberOfColumns;
 	}
 
 	@Override
@@ -62,9 +65,9 @@ public class NumberAdapter extends BaseAdapter{
 			
 			TextView numberValue = (TextView) convertView.findViewById(R.id.gridValue);
 			
-			//TODO: gia tri dang la gia tri tinh, phai thay thanh gia tri dong
-			numberValue.setWidth(screen_width/6);
-			numberValue.setHeight(screen_width/6);
+			//Tuy chinh kich thuoc cua cell theo cellSize (theo kich thuoc man hinh)
+			numberValue.setWidth(cellSize);
+			numberValue.setHeight(cellSize);
 			numberValue.setText(""+numbers.get(position));
 			
 		} 
