@@ -3,6 +3,7 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 
 public class PlayActivity extends ActionBarActivity {
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class PlayActivity extends ActionBarActivity {
 		private long time;
 		// variable to display highscore
 		private int highscore, score;
+		
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,6 +148,8 @@ public class PlayActivity extends ActionBarActivity {
 							Toast.makeText(getActivity(),
 									"Completed:" + minutes + ":" + seconds,
 									Toast.LENGTH_SHORT).show();
+							
+							
 						}
 					}
 				}
