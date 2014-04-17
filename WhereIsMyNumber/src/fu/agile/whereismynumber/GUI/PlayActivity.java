@@ -3,6 +3,8 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -25,9 +27,9 @@ import fu.agile.whereismynumber.Adapter.NumberAdapter;
 import fu.agile.whereismynumber.Adapter.ViewHolderItem;
 import fu.agile.whereismynumber.Enquity.Number;
 import fu.agile.whereismynumber.Enquity.StoreData;
+import fu.agile.whereismynumber.Utils.MySoundManager;
 
 public class PlayActivity extends ActionBarActivity {
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +86,15 @@ public class PlayActivity extends ActionBarActivity {
 		// Animation holder
 		private Animation slide_left_out;
 		private Animation slide_right_in;
-		
+
 		// Bien hien thi diem high score
 		private TextView displayScore;
+
+		// Variable for sound
+		MySoundManager soundManager;
+
+		// Context
+		Context mContext;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -104,8 +112,8 @@ public class PlayActivity extends ActionBarActivity {
 			 * Xu ly gridNumber
 			 */
 			// Tao ra numberAdapter de ti nua su dung cho gridNumber
-			numbers_adapter = new NumberAdapter(getActivity(),
-					listNumberDisplay, numberOfColumns);
+			numbers_adapter = new NumberAdapter(mContext, listNumberDisplay,
+					numberOfColumns);
 			gridNumber.setAdapter(numbers_adapter);
 
 			// OnClick for gridNumber
@@ -118,6 +126,8 @@ public class PlayActivity extends ActionBarActivity {
 					Number clickedNumber = (Number) numbers_adapter
 							.getItem(position);
 					if (clickedNumber.equals(listNumberTarget.get(index))) {
+						// Play right_sound
+						soundManager.play(MySoundManager.RIGHT_ANWSER_SOUND);
 
 						// Chuyen thanh dau X
 						TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
@@ -128,6 +138,8 @@ public class PlayActivity extends ActionBarActivity {
 						} catch (IndexOutOfBoundsException e) {
 							gameStop();
 						}
+					} else {
+						soundManager.play(MySoundManager.WRONG_ANSWER_SONUD);
 					}
 				}
 			});
@@ -147,10 +159,11 @@ public class PlayActivity extends ActionBarActivity {
 		private void gameStart() {
 			mChronometer.start();
 			targetNumberTextView
-			.setText(listNumberTarget.get(index).toString());
+					.setText(listNumberTarget.get(index).toString());
 		}
 
 		private void initiateGamePlay() {
+			iniResources();
 			getGameSetting();
 			getMatrixSize();
 			createGridNumberList();
@@ -158,16 +171,21 @@ public class PlayActivity extends ActionBarActivity {
 			loadAnimation();
 		}
 
+		private void iniResources() {
+			mContext = getActivity();
+			soundManager = new MySoundManager(mContext);
+		}
+
 		private void loadAnimation() {
-			slide_left_out = AnimationUtils.loadAnimation(getActivity(),
+			slide_left_out = AnimationUtils.loadAnimation(mContext,
 					R.anim.slide_out_left);
-			slide_right_in = AnimationUtils.loadAnimation(getActivity(),
+			slide_right_in = AnimationUtils.loadAnimation(mContext,
 					R.anim.slide_in_right);
 		}
 
 		private void getGameSetting() {
 			// Lay du dieu ve chieu dai va rong cua ma tran
-			game_setting = getActivity().getIntent().getBundleExtra(
+			game_setting = ((Activity) mContext).getIntent().getBundleExtra(
 					"GAME_SETTING");
 			GAME_TYPE = game_setting.getInt("GAME_TYPE", 3);
 		}
@@ -202,7 +220,7 @@ public class PlayActivity extends ActionBarActivity {
 				}
 				break;
 			case 3:
-				for (int i = amountOfNumbers - 1; i > 0; i--) {
+				for (int i = amountOfNumbers; i > 0; i--) {
 					listNumberTarget.add(new Number(i));
 				}
 				Collections.shuffle(listNumberTarget);
@@ -221,27 +239,27 @@ public class PlayActivity extends ActionBarActivity {
 			int minutes = (int) (time - hours * 3600000) / 60000;
 			int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
 
-			Toast.makeText(getActivity(),
-					"Completed:" + minutes + ":" + seconds, Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(mContext, "Completed:" + minutes + ":" + seconds,
+					Toast.LENGTH_SHORT).show();
 			score = seconds + minutes * 60;
-			store = new StoreData(getActivity());
-			store.setHighscore(score,GAME_TYPE, amountOfNumbers );
-			highscore = store.getHighscore(GAME_TYPE,amountOfNumbers);
+			store = new StoreData(mContext);
+			store.setHighscore(score, GAME_TYPE, amountOfNumbers);
+			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
 			displayScore.setText("" + highscore + " s");
-			Toast.makeText(getActivity(), "Highscore:" + highscore,
+			Toast.makeText(mContext, "Highscore:" + highscore,
 					Toast.LENGTH_SHORT).show();
 		}
 
 		private void printNextTargetNumber() {
-			nextTargetNumber();
+			increaseIndex();
 			targetNumberTextView.startAnimation(slide_left_out);
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
 			targetNumberTextView.startAnimation(slide_right_in);
+
 		}
 
-		private void nextTargetNumber() {
+		private void increaseIndex() {
 			index++;
 		}
 
