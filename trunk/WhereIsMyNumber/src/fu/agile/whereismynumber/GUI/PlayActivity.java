@@ -21,6 +21,9 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 import fu.agile.whereismynumber.R;
+import fu.agile.whereismynumber.Adapter.NumberAdapter;
+import fu.agile.whereismynumber.Enquity.Number;
+import fu.agile.whereismynumber.Enquity.StoreData;
 
 public class PlayActivity extends ActionBarActivity {
 
