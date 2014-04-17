@@ -1,6 +1,7 @@
 package fu.agile.whereismynumber.GUI;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -17,12 +18,13 @@ import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Enquity.StoreData;
 
 public class MainScreen extends ActionBarActivity {
+	private static Typeface customfont;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_screen);
-
+		customfont = Typeface.createFromAsset(getAssets(), "fonts/Karate.ttf");
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -172,9 +174,9 @@ public class MainScreen extends ActionBarActivity {
 		private void updateBestScoreTextView(int mode, int size) {
 			store = new StoreData(getActivity(), mode, size);
 			int highscore = store.getHighscore(mode, size);
-			displayScore.setText("Best score: " + highscore + " s");
+			displayScore.setTypeface(customfont);
+			displayScore.setText("Best: " + highscore + " s");
 		}
-
 
 	}
 
