@@ -84,6 +84,9 @@ public class PlayActivity extends ActionBarActivity {
 		// Animation holder
 		private Animation slide_left_out;
 		private Animation slide_right_in;
+		
+		// Bien hien thi diem high score
+		private TextView displayScore;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,7 +98,8 @@ public class PlayActivity extends ActionBarActivity {
 			 */
 			initiateGamePlay();
 			getReferenceToView(rootView);
-
+			displayScore = (TextView) rootView
+					.findViewById(R.id.displayHighscore);
 			/*
 			 * Xu ly gridNumber
 			 */
@@ -222,8 +226,9 @@ public class PlayActivity extends ActionBarActivity {
 					.show();
 			score = seconds + minutes * 60;
 			store = new StoreData(getActivity());
-			store.setHighscore(score);
-			highscore = store.getHighscore();
+			store.setHighscore(score,GAME_TYPE, amountOfNumbers );
+			highscore = store.getHighscore(GAME_TYPE,amountOfNumbers);
+			displayScore.setText("" + highscore + " s");
 			Toast.makeText(getActivity(), "Highscore:" + highscore,
 					Toast.LENGTH_SHORT).show();
 		}
