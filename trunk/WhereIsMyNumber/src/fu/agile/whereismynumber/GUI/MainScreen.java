@@ -1,6 +1,5 @@
 package fu.agile.whereismynumber.GUI;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 
 public class MainScreen extends ActionBarActivity {
@@ -51,7 +49,7 @@ public class MainScreen extends ActionBarActivity {
 			highScoreButton = (Button) rootView
 					.findViewById(R.id.highScoreButton);
 			game_setting = new Bundle();
-			
+
 			// OnClickListener for each button
 			playButton.setOnClickListener(this);
 			highScoreButton.setOnClickListener(this);
@@ -115,10 +113,10 @@ public class MainScreen extends ActionBarActivity {
 				startActivity(goToPlayActivity);
 				break;
 			case R.id.highScoreButton:
-				// TODO: Intent for High Score Button
-				 Intent goToHighScoreActivity = new Intent(getActivity(),
-				 HighScoreActivity.class);
-				 startActivity(goToHighScoreActivity);
+				// Intent for High Score Button
+				Intent goToHighScoreActivity = new Intent(getActivity(),
+						HighScoreActivity.class);
+				startActivity(goToHighScoreActivity);
 
 			}
 

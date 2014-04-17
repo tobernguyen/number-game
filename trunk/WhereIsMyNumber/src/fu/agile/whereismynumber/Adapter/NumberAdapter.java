@@ -92,7 +92,5 @@ public class NumberAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	static class ViewHolderItem {
-		TextView textViewItem;
-	}
+
 }
