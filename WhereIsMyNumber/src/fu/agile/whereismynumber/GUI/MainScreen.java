@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
+import fu.agile.whereismynumber.Enquity.StoreData;
 
 public class MainScreen extends ActionBarActivity {
 
@@ -31,12 +32,14 @@ public class MainScreen extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment implements
-			OnClickListener {
+			OnClickListener, android.widget.RadioGroup.OnCheckedChangeListener {
 
 		private Button playButton, highScoreButton, buttonOk;
 		private RadioGroup matrixSizeRadio, playTypeRadio;
 		Bundle game_setting;
-		private TextView highscoreText;
+		private TextView displayScore;
+		private StoreData store;
+		private int highscore;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +52,9 @@ public class MainScreen extends ActionBarActivity {
 			highScoreButton = (Button) rootView
 					.findViewById(R.id.highScoreButton);
 			game_setting = new Bundle();
+			displayScore = (TextView) rootView
+					.findViewById(R.id.displayHighscore);
+			store = new StoreData(getActivity());
 
 			// OnClickListener for each button
 			playButton.setOnClickListener(this);
@@ -62,14 +68,19 @@ public class MainScreen extends ActionBarActivity {
 			playTypeRadio = (RadioGroup) rootView
 					.findViewById(R.id.playType_radioGroup);
 
+			matrixSizeRadio.setOnCheckedChangeListener(this);
+			playTypeRadio.setOnCheckedChangeListener(this);
+			
 			return rootView;
 		}
 
+		
 		@Override
 		public void onClick(View arg0) {
 			switch (arg0.getId()) {
 			case R.id.playButton:
 
+				
 				// Get value of checkedRadioButton
 				int checkedRadioButton = matrixSizeRadio
 						.getCheckedRadioButtonId();
@@ -121,6 +132,20 @@ public class MainScreen extends ActionBarActivity {
 			}
 
 		}
+
+
+		@Override
+		public void onCheckedChanged(RadioGroup arg0, int arg1) {
+			// TODO Auto-generated method stub
+			int size = matrixSizeRadio
+					.getCheckedRadioButtonId();
+			int mode = playTypeRadio.getCheckedRadioButtonId();
+			highscore = store.getHighscore(mode, size);
+			displayScore.setText("" + highscore + " s");
+			
+		}
+
 	}
+
 
 }
