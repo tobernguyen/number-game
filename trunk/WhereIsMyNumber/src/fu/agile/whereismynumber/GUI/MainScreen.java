@@ -1,5 +1,6 @@
 package fu.agile.whereismynumber.GUI;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 
@@ -33,9 +35,10 @@ public class MainScreen extends ActionBarActivity {
 	public static class PlaceholderFragment extends Fragment implements
 			OnClickListener {
 
-		private Button playButton, highScoreButton;
+		private Button playButton, highScoreButton, buttonOk;
 		private RadioGroup matrixSizeRadio, playTypeRadio;
 		Bundle game_setting;
+		private TextView highscoreText;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +51,7 @@ public class MainScreen extends ActionBarActivity {
 			highScoreButton = (Button) rootView
 					.findViewById(R.id.highScoreButton);
 			game_setting = new Bundle();
-
+			
 			// OnClickListener for each button
 			playButton.setOnClickListener(this);
 			highScoreButton.setOnClickListener(this);
@@ -91,7 +94,7 @@ public class MainScreen extends ActionBarActivity {
 
 				// Get value of checkedRadioButton
 				checkedRadioButton = playTypeRadio.getCheckedRadioButtonId();
-				
+
 				switch (checkedRadioButton) {
 				case R.id.playType_increase:
 					game_setting.putInt("GAME_TYPE", 1);
@@ -113,11 +116,10 @@ public class MainScreen extends ActionBarActivity {
 				break;
 			case R.id.highScoreButton:
 				// TODO: Intent for High Score Button
-				Toast.makeText(getActivity(), "High Score Button Clicked",
-						Toast.LENGTH_SHORT).show();
+				 Intent goToHighScoreActivity = new Intent(getActivity(),
+				 HighScoreActivity.class);
+				 startActivity(goToHighScoreActivity);
 
-			default:
-				break;
 			}
 
 		}

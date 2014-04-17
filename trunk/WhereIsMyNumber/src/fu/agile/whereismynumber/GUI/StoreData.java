@@ -3,6 +3,7 @@ package fu.agile.whereismynumber.GUI;
 import android.R.bool;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.support.v7.internal.widget.ActivityChooserModel.HistoricalRecord;
 
 public class StoreData {
 	// bien de truyen vao luu highscore, nhac va che do choi
@@ -10,7 +11,7 @@ public class StoreData {
 	// Bien dieu khien viec thay doi gia tri luu trong shareperferrence
 	SharedPreferences.Editor editScore, editSound, editMode;
 	// bien luu highscore
-	private int highscore;
+	private int highscore = 0;
 	// Bien luu che do bat hay tat nhac
 	private boolean isSound;
 	// Bien luu che do choi
