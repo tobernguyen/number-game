@@ -34,7 +34,7 @@ public class MainScreen extends ActionBarActivity {
 			OnClickListener {
 
 		private Button playButton, highScoreButton;
-		private RadioGroup matrixSizeRadio;
+		private RadioGroup matrixSizeRadio, playTypeRadio;
 		Bundle game_setting;
 
 		@Override
@@ -43,7 +43,7 @@ public class MainScreen extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_main_screen,
 					container, false);
 
-			// Get resoures
+			// Get resources
 			playButton = (Button) rootView.findViewById(R.id.playButton);
 			highScoreButton = (Button) rootView
 					.findViewById(R.id.highScoreButton);
@@ -53,9 +53,13 @@ public class MainScreen extends ActionBarActivity {
 			playButton.setOnClickListener(this);
 			highScoreButton.setOnClickListener(this);
 
-			// Get matrix size
+			// Get references to playSize_radioGroup
 			matrixSizeRadio = (RadioGroup) rootView
 					.findViewById(R.id.playSize_radioGroup);
+
+			// Get references to playSize_radioGroup
+			playTypeRadio = (RadioGroup) rootView
+					.findViewById(R.id.playType_radioGroup);
 
 			return rootView;
 		}
@@ -65,6 +69,7 @@ public class MainScreen extends ActionBarActivity {
 			switch (arg0.getId()) {
 			case R.id.playButton:
 
+				// Get value of checkedRadioButton
 				int checkedRadioButton = matrixSizeRadio
 						.getCheckedRadioButtonId();
 
@@ -81,6 +86,23 @@ public class MainScreen extends ActionBarActivity {
 				default:
 					game_setting.putInt("A", 6);
 					game_setting.putInt("B", 8);
+					break;
+				}
+
+				// Get value of checkedRadioButton
+				checkedRadioButton = playTypeRadio.getCheckedRadioButtonId();
+				
+				switch (checkedRadioButton) {
+				case R.id.playType_increase:
+					game_setting.putInt("GAME_TYPE", 1);
+					break;
+				case R.id.playType_decrease:
+					game_setting.putInt("GAME_TYPE", 2);
+					break;
+				case R.id.playType_random:
+					game_setting.putInt("GAME_TYPE", 3);
+					break;
+				default:
 					break;
 				}
 
