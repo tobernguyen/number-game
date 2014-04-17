@@ -3,7 +3,6 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -85,15 +84,33 @@ public class PlayActivity extends ActionBarActivity {
 			// Number of column in matrix
 			int numberOfColumns = game_setting.getInt("A", 6);
 
-			// Set default number
-			for (int i = 1; i <= 4; i++) {
+			// Tao ra mot day so moi va shuffle no
+			for (int i = 1; i <= amountOfNumbers; i++) {
 				listNumberDisplay.add(new Number(i));
-				listNumberTarget.add(new Number(i));
 			}
-
-			// Dao day so
 			Collections.shuffle(listNumberDisplay);
-			Collections.shuffle(listNumberTarget);
+
+			// Xy lu day so tuy vao kieu choi
+			
+			switch (game_setting.getInt("GAME_TYPE",3)) {
+			case 1:
+				for (int i = 1; i <= amountOfNumbers; i++) {
+					listNumberTarget.add(new Number(i));
+				}
+				break;
+			case 2:
+				for (int i = amountOfNumbers; i > 0; i--) {
+					listNumberTarget.add(new Number(i));
+				}
+				break;
+			case 3:
+				for (int i = amountOfNumbers-1; i > 0; i--) {
+					listNumberTarget.add(new Number(i));
+				}
+				Collections.shuffle(listNumberTarget);
+			default:
+				break;
+			}
 
 			// Xu ly GridNumber
 			final NumberAdapter numbers_adapter = new NumberAdapter(
@@ -170,6 +187,8 @@ public class PlayActivity extends ActionBarActivity {
 		public void nextTargetNumber() {
 			index++;
 		}
+		
+		
 
 	}
 
