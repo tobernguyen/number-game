@@ -61,7 +61,7 @@ public class HighScoreActivity extends ActionBarActivity {
 			View rootView = inflater.inflate(R.layout.fragment_high_score,
 					container, false);
 			store = new StoreData(getActivity());
-			highscore = store.getHighscore();
+//			highscore = store.getHighscore();
 			highscoreText = (TextView) rootView.findViewById(R.id.scoreRandom66);
 			highscoreText.setText(highscore+"s");
 			return rootView;

@@ -1,6 +1,5 @@
 package fu.agile.whereismynumber.Enquity;
 
-import android.R.bool;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -30,21 +29,91 @@ public class StoreData {
 	}
 
 	// Dat highscore luu vao trong data
-	public void setHighscore(int score) {
+	public void setHighscore(int score, int mode, int size) {
 		highscore = highscoreStore.getInt("highscore", 0);
-		if (score > highscore) {
-			highscore = score;
-			editScore.putInt("highscore", score);
-			editScore.commit();
-		} else {
-			editScore.putInt("highscore", highscore);
-			editScore.commit();
+		switch (mode) {
+		case 1:
+			if (size == 48) {
+				if (score < highscore) {
+					highscore = score;
+					editScore.putInt("highscore" + mode + size, score);
+					editScore.commit();
+				} else {
+					editScore.putInt("highscore" + mode + size, highscore);
+					editScore.commit();
+				}
+			} else if (size == 36) {
+				if (score > highscore) {
+					highscore = score;
+					editScore.putInt("highscore" + mode + size, score);
+					editScore.commit();
+				} else {
+					editScore.putInt("highscore" + mode + size, highscore);
+					editScore.commit();
+				}
+			}
+			break;
+
+		case 2:
+			if (size == 48) {
+				if (score < highscore) {
+					highscore = score;
+					editScore.putInt("highscore" + mode + size, score);
+					editScore.commit();
+				} else {
+					editScore.putInt("highscore" + mode + size, highscore);
+					editScore.commit();
+				}
+			} else if (size == 36) {
+				if (score > highscore) {
+					highscore = score;
+					editScore.putInt("highscore" + mode + size, score);
+					editScore.commit();
+				} else {
+					editScore.putInt("highscore" + mode + size, highscore);
+					editScore.commit();
+				}
+			}
+			break;
+
+		case 3:
+			if (size == 48) {
+				if (score < highscore) {
+					highscore = score;
+					editScore.putInt("highscore" + mode + size, score);
+					editScore.commit();
+				} else {
+					editScore.putInt("highscore" + mode + size, highscore);
+					editScore.commit();
+				}
+			} else if (size == 36) {
+				if (score < highscore) {
+					highscore = score;
+					editScore.putInt("highscore" + mode + size, score);
+					editScore.commit();
+				} else {
+					editScore.putInt("highscore" + mode + size, highscore);
+					editScore.commit();
+				}
+			}
+			break;
 		}
+
 	}
 
 	// Lay highscore tu data
-	public int getHighscore() {
-		highscore = highscoreStore.getInt("highscore", 0);
+	public int getHighscore(int mode, int size) {
+		switch (mode) {
+		case 1:
+			highscore = highscoreStore.getInt("highscore"+mode+size, 0);
+			break;
+		case 2 :
+			highscore = highscoreStore.getInt("highscore"+mode+size, 0);
+			break;
+		case 3 :
+			highscore = highscoreStore.getInt("highscore"+mode+size, 0);
+			break;
+		}
 		return highscore;
 	}
 
