@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +20,14 @@ public class NumberAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<Number> numbers;
 	private int screen_width, cellSize;
+	private Typeface custom_font;
 
 	public NumberAdapter(Context context, ArrayList<Number> numbers,
 			int numberOfColumns) {
 		super();
 		this.context = context;
+		custom_font = Typeface.createFromAsset(context.getAssets(),
+				"fonts/comic.ttf");
 
 		// Initiate default number
 		this.numbers = numbers;
@@ -85,12 +89,12 @@ public class NumberAdapter extends BaseAdapter {
 		// Tuy chinh kich thuoc cua cell theo cellSize (theo kich thuoc man
 		// hinh)
 		TextView mTextView = viewHolder.textViewItem;
+		mTextView.setTypeface(custom_font);
 		mTextView.setWidth(cellSize);
 		mTextView.setHeight(cellSize);
 		mTextView.setText("" + numbers.get(position));
 
 		return convertView;
 	}
-
 
 }
