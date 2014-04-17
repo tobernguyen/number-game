@@ -34,7 +34,7 @@ public class MainScreen extends ActionBarActivity {
 	public static class PlaceholderFragment extends Fragment implements
 			OnClickListener, android.widget.RadioGroup.OnCheckedChangeListener {
 
-		private Button playButton, highScoreButton, buttonOk;
+		private Button playButton, highScoreButton;
 		private RadioGroup matrixSizeRadio, playTypeRadio;
 		Bundle game_setting;
 		private TextView displayScore;
@@ -70,17 +70,16 @@ public class MainScreen extends ActionBarActivity {
 
 			matrixSizeRadio.setOnCheckedChangeListener(this);
 			playTypeRadio.setOnCheckedChangeListener(this);
-			
+
+			updateBestScoreTextView();
 			return rootView;
 		}
 
-		
 		@Override
 		public void onClick(View arg0) {
 			switch (arg0.getId()) {
 			case R.id.playButton:
 
-				
 				// Get value of checkedRadioButton
 				int checkedRadioButton = matrixSizeRadio
 						.getCheckedRadioButtonId();
@@ -133,19 +132,19 @@ public class MainScreen extends ActionBarActivity {
 
 		}
 
-
 		@Override
 		public void onCheckedChanged(RadioGroup arg0, int arg1) {
-			// TODO Auto-generated method stub
-			int size = matrixSizeRadio
-					.getCheckedRadioButtonId();
+			updateBestScoreTextView();
+
+		}
+
+		private void updateBestScoreTextView() {
+			int size = matrixSizeRadio.getCheckedRadioButtonId();
 			int mode = playTypeRadio.getCheckedRadioButtonId();
 			highscore = store.getHighscore(mode, size);
-			displayScore.setText("" + highscore + " s");
-			
+			displayScore.setText("Best score: " + highscore + " s");
 		}
 
 	}
-
 
 }
