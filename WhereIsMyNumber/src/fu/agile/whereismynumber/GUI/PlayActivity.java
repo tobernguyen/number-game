@@ -50,7 +50,7 @@ public class PlayActivity extends ActionBarActivity {
 		private int amountOfNumbers;
 
 		// Index for next target number
-		private int index = -1;
+		private int index = 0;
 
 		// Initiate Array of Number to play
 		private ArrayList<Number> listNumberDisplay = new ArrayList<Number>();
@@ -118,6 +118,9 @@ public class PlayActivity extends ActionBarActivity {
 				}
 			});
 
+			/*
+			 * Start Chronometer and print target number
+			 */
 			gameStart();
 
 			return rootView;
@@ -129,7 +132,8 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void gameStart() {
 			mChronometer.start();
-			printNextTargetNumber();
+			targetNumberTextView
+			.setText(listNumberTarget.get(index).toString());
 		}
 
 		private void initiateGamePlay() {
