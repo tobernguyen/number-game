@@ -88,9 +88,9 @@
         android:id="@+id/displayHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/playSize_radioGroup"
         android:layout_below="@+id/playType_radioGroup"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
+        android:layout_marginTop="27dp"
         android:text=""
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
