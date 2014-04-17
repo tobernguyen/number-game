@@ -43,8 +43,6 @@
             android:id="@+id/play_6x6_rbtn"
             android:layout_width="100dp"
             android:layout_height="50dp"
-            
-
             android:gravity="center_vertical|center_horizontal"
             android:text="6x6" />
 
@@ -53,11 +51,37 @@
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginLeft="5dp"
-     
-
             android:checked="true"
             android:gravity="center_vertical|center_horizontal"
             android:text="6x8" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/playType_radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/playSize_radioGroup"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/playType_increase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:text="Increase" />
+
+        <RadioButton
+            android:id="@+id/playType_decrease"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decrease" />
+
+        <RadioButton
+            android:id="@+id/playType_random"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Random" />
     </RadioGroup>
 
 </RelativeLayout>
