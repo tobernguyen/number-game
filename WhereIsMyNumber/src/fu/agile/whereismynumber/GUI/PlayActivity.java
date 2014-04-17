@@ -23,8 +23,7 @@ import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 
 public class PlayActivity extends ActionBarActivity {
-	
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,62 +36,143 @@ public class PlayActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
-
 	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
-
 		// Bundle for game setting, get from MainScreen
-		Bundle game_setting;
+		private Bundle game_setting;
+		private int GAME_TYPE;
+
+		// Amount of numbers
+		private int amountOfNumbers;
 
 		// Index for next target number
-		int index = 0;
+		private int index = -1;
 
 		// Initiate Array of Number to play
-		ArrayList<Number> listNumberDisplay = new ArrayList<Number>();
-		ArrayList<Number> listNumberTarget = new ArrayList<Number>();
+		private ArrayList<Number> listNumberDisplay = new ArrayList<Number>();
+		private ArrayList<Number> listNumberTarget = new ArrayList<Number>();
+
+		// Adapter for GridNumber
+		private NumberAdapter numbers_adapter;
+
+		// Variable to handle Views
+		private GridView gridNumber;
+		private TextView targetNumberTextView;
 
 		// The method of android to display stop watch
 		private Chronometer mChronometer;
+
+		// Number of column to divide
+		int numberOfColumns;
 
 		// Variable of score time
 		private long time;
 		// variable to display highscore
 		private int highscore, score;
-		//Tao bien de store data
+		// Tao bien de store data
 		private StoreData store;
+
+		// Animation holder
+		private Animation slide_left_out;
+		private Animation slide_right_in;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_play, container,
 					false);
-			// Variable of Chronometer
-			mChronometer = (Chronometer) rootView
-					.findViewById(R.id.chronometer);
-			
+			/*
+			 * Initiate Game Play
+			 */
+			initiateGamePlay();
+			getReferenceToView(rootView);
 
-			// Tao ra mot day so random de bat nguoi dung chon
+			/*
+			 * Xu ly gridNumber
+			 */
+			// Tao ra numberAdapter de ti nua su dung cho gridNumber
+			numbers_adapter = new NumberAdapter(getActivity(),
+					listNumberDisplay, numberOfColumns);
+			gridNumber.setAdapter(numbers_adapter);
+
+			// OnClick for gridNumber
+			gridNumber.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> arg0, View view,
+						int position, long id) {
+					// Kiem tra xem so nguoi dung click vao co dung khong
+					Number clickedNumber = (Number) numbers_adapter
+							.getItem(position);
+					if (clickedNumber.equals(listNumberTarget.get(index))) {
+						try {
+							printNextTargetNumber();
+						} catch (IndexOutOfBoundsException e) {
+							gameStop();
+						}
+					}
+				}
+			});
+
+			gameStart();
+
+			return rootView;
+		}
+
+		/*
+		 * Below is support functions which use in onCreateView
+		 */
+
+		private void gameStart() {
+			mChronometer.start();
+			printNextTargetNumber();
+		}
+
+		private void initiateGamePlay() {
+			getGameSetting();
+			getMatrixSize();
+			createGridNumberList();
+			createTargetNumberList();
+			loadAnimation();
+		}
+
+		private void loadAnimation() {
+			slide_left_out = AnimationUtils.loadAnimation(getActivity(),
+					R.anim.slide_out_left);
+			slide_right_in = AnimationUtils.loadAnimation(getActivity(),
+					R.anim.slide_in_right);
+		}
+
+		private void getGameSetting() {
+			// Lay du dieu ve chieu dai va rong cua ma tran
 			game_setting = getActivity().getIntent().getBundleExtra(
 					"GAME_SETTING");
-			int amountOfNumbers = game_setting.getInt("A", 6)
+			GAME_TYPE = game_setting.getInt("GAME_TYPE", 3);
+		}
+
+		private void getMatrixSize() {
+			// Tinh toan tong so chu so
+			amountOfNumbers = game_setting.getInt("A", 6)
 					* game_setting.getInt("B", 8);
+			numberOfColumns = game_setting.getInt("A", 6);
+		}
 
-			// Number of column in matrix
-			int numberOfColumns = game_setting.getInt("A", 6);
-
-			// Tao ra mot day so moi va shuffle no
+		private void createGridNumberList() {
+			// Tao ra mot day so moi va shuffle no de ti nua dua vao GridView
 			for (int i = 1; i <= amountOfNumbers; i++) {
 				listNumberDisplay.add(new Number(i));
 			}
 			Collections.shuffle(listNumberDisplay);
+		}
 
-			// Xy lu day so tuy vao kieu choi
-			
-			switch (game_setting.getInt("GAME_TYPE",3)) {
+		private void createTargetNumberList() {
+			// Tao ra mot day so target tuy thuoc vao kieu choi nguoi dung da
+			// chon
+			switch (GAME_TYPE) {
 			case 1:
 				for (int i = 1; i <= amountOfNumbers; i++) {
 					listNumberTarget.add(new Number(i));
@@ -104,92 +184,55 @@ public class PlayActivity extends ActionBarActivity {
 				}
 				break;
 			case 3:
-				for (int i = amountOfNumbers-1; i > 0; i--) {
+				for (int i = amountOfNumbers - 1; i > 0; i--) {
 					listNumberTarget.add(new Number(i));
 				}
 				Collections.shuffle(listNumberTarget);
 			default:
 				break;
 			}
+		}
 
-			// Xu ly GridNumber
-			final NumberAdapter numbers_adapter = new NumberAdapter(
-					getActivity(), listNumberDisplay, numberOfColumns);
-			GridView gridNumber = (GridView) rootView
-					.findViewById(R.id.gridView);
-			gridNumber.setAdapter(numbers_adapter);
+		private void gameStop() {
+			// Dung do ho dem gio
+			mChronometer.stop();
 
-			// Cho dong ho chay
-			mChronometer.start();
+			// Lay thoi gian cua lan choi do
+			time = SystemClock.elapsedRealtime() - mChronometer.getBase();
+			int hours = (int) (time / 3600000);
+			int minutes = (int) (time - hours * 3600000) / 60000;
+			int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
 
-			// Xu ly target number
-			final TextView targetNumberTextView = (TextView) rootView
-					.findViewById(R.id.targetNumberTextView);
+			Toast.makeText(getActivity(),
+					"Completed:" + minutes + ":" + seconds, Toast.LENGTH_SHORT)
+					.show();
+			score = seconds + minutes * 60;
+			store = new StoreData(getActivity());
+			store.setHighscore(score);
+			highscore = store.getHighscore();
+			Toast.makeText(getActivity(), "Highscore:" + highscore,
+					Toast.LENGTH_SHORT).show();
+		}
+
+		private void printNextTargetNumber() {
+			nextTargetNumber();
+			targetNumberTextView.startAnimation(slide_left_out);
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
-
-			// Xu ly onLick GridView
-			gridNumber.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> arg0, View view,
-						int position, long id) {
-
-					// Lay phan tu nguoi dung click vao
-					Number clickedNumber = (Number) numbers_adapter
-							.getItem(position);
-					if (clickedNumber.equals(listNumberTarget.get(index))) {
-						// Tang index
-						nextTargetNumber();
-						try {
-							// Hieu ung cho target number
-							Animation slide_left_out = AnimationUtils
-									.loadAnimation(getActivity(),
-											R.anim.slide_out_left);
-							Animation slide_right_in = AnimationUtils
-									.loadAnimation(getActivity(),
-											R.anim.slide_in_right);
-							targetNumberTextView.startAnimation(slide_left_out);
-							targetNumberTextView.setText(listNumberTarget.get(
-									index).toString());
-							targetNumberTextView.startAnimation(slide_right_in);
-
-						} catch (IndexOutOfBoundsException e) {
-
-							// Lua vao database
-							mChronometer.stop();
-							// Lay thoi gian cua lan choi do
-							time = SystemClock.elapsedRealtime()
-									- mChronometer.getBase();
-							int hours = (int) (time / 3600000);
-							int minutes = (int) (time - hours * 3600000) / 60000;
-							int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
-
-							Toast.makeText(getActivity(),
-									"Completed:" + minutes + ":" + seconds,
-									Toast.LENGTH_SHORT).show();
-							score = seconds + minutes *60;
-							store = new StoreData(getActivity());
-							store.setHighscore(score);
-							highscore = store.getHighscore();
-							Toast.makeText(getActivity(),
-									"Highscore:" + highscore,
-									Toast.LENGTH_SHORT).show();
-							
-						}
-					}
-				}
-			});
-
-			return rootView;
+			targetNumberTextView.startAnimation(slide_right_in);
 		}
 
-		public void nextTargetNumber() {
+		private void nextTargetNumber() {
 			index++;
 		}
-		
-		
 
+		private void getReferenceToView(View currentView) {
+			mChronometer = (Chronometer) currentView
+					.findViewById(R.id.chronometer);
+			gridNumber = (GridView) currentView.findViewById(R.id.gridView);
+			targetNumberTextView = (TextView) currentView
+					.findViewById(R.id.targetNumberTextView);
+		}
 	}
 
 }
