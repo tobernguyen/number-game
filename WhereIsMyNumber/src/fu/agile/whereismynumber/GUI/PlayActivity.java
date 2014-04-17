@@ -22,10 +22,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Adapter.NumberAdapter;
+import fu.agile.whereismynumber.Adapter.ViewHolderItem;
 import fu.agile.whereismynumber.Enquity.Number;
 import fu.agile.whereismynumber.Enquity.StoreData;
 
 public class PlayActivity extends ActionBarActivity {
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +114,11 @@ public class PlayActivity extends ActionBarActivity {
 					Number clickedNumber = (Number) numbers_adapter
 							.getItem(position);
 					if (clickedNumber.equals(listNumberTarget.get(index))) {
+
+						// Chuyen thanh dau X
+						TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
+						mTextView.setText("X");
+
 						try {
 							printNextTargetNumber();
 						} catch (IndexOutOfBoundsException e) {
