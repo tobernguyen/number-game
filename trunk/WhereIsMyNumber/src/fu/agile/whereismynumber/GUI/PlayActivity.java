@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ import fu.agile.whereismynumber.Enquity.StoreData;
 import fu.agile.whereismynumber.Utils.MySoundManager;
 
 public class PlayActivity extends ActionBarActivity {
+	private static Typeface customfont;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +40,7 @@ public class PlayActivity extends ActionBarActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_play);
-
+		customfont = Typeface.createFromAsset(getAssets(), "fonts/Karate.ttf");
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -158,6 +160,7 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void gameStart() {
 			mChronometer.start();
+			targetNumberTextView.setTypeface(customfont);
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
 		}
