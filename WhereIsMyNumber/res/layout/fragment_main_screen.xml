@@ -9,20 +9,11 @@
     tools:context="fu.agile.whereismynumber.MainScreen$PlaceholderFragment" >
 
     <Button
-        android:id="@+id/highScoreButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/playButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="33dp"
-        android:background="@drawable/button_highscore_press" />
-
-    <Button
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/highScoreButton"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:background="@drawable/button_play_press"
         android:padding="0dp"
@@ -32,9 +23,8 @@
         android:id="@+id/playSize_radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/highScoreButton"
-        android:layout_alignRight="@+id/highScoreButton"
-        android:layout_below="@+id/highScoreButton"
+        android:layout_below="@+id/playButton"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="47dp"
         android:gravity="center"
         android:orientation="horizontal" >
@@ -67,7 +57,7 @@
         <RadioButton
             android:id="@+id/playType_increase"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_height="wrap_content"
             android:text="Increase" />
 
         <RadioButton
@@ -92,6 +82,7 @@
         android:layout_below="@+id/playType_radioGroup"
         android:layout_marginTop="27dp"
         android:text=""
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:typeface="sans" />
 
 </RelativeLayout>

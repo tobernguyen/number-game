@@ -242,10 +242,10 @@ public class PlayActivity extends ActionBarActivity {
 			Toast.makeText(mContext, "Completed:" + minutes + ":" + seconds,
 					Toast.LENGTH_SHORT).show();
 			score = seconds + minutes * 60;
-			store = new StoreData(mContext);
+			store = new StoreData(mContext, GAME_TYPE, amountOfNumbers);
 			store.setHighscore(score, GAME_TYPE, amountOfNumbers);
 			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
-			displayScore.setText("" + highscore + " s");
+
 			Toast.makeText(mContext, "Highscore:" + highscore,
 					Toast.LENGTH_SHORT).show();
 		}

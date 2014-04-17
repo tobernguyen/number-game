@@ -9,7 +9,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Enquity.StoreData;
@@ -32,33 +34,31 @@ public class MainScreen extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment implements
-			OnClickListener, android.widget.RadioGroup.OnCheckedChangeListener {
+			OnClickListener {
 
-		private Button playButton, highScoreButton;
+		private Button playButton;
 		private RadioGroup matrixSizeRadio, playTypeRadio;
 		Bundle game_setting;
 		private TextView displayScore;
 		private StoreData store;
-		private int highscore;
+		private int mode, size;
+		private RadioButton radiobutton;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main_screen,
-					container, false);
-
+			final View rootView = inflater.inflate(
+					R.layout.fragment_main_screen, container, false);
+			mode = 3;
+			size = 48;
 			// Get resources
 			playButton = (Button) rootView.findViewById(R.id.playButton);
-			highScoreButton = (Button) rootView
-					.findViewById(R.id.highScoreButton);
 			game_setting = new Bundle();
 			displayScore = (TextView) rootView
 					.findViewById(R.id.displayHighscore);
-			store = new StoreData(getActivity());
 
 			// OnClickListener for each button
 			playButton.setOnClickListener(this);
-			highScoreButton.setOnClickListener(this);
 
 			// Get references to playSize_radioGroup
 			matrixSizeRadio = (RadioGroup) rootView
@@ -68,10 +68,47 @@ public class MainScreen extends ActionBarActivity {
 			playTypeRadio = (RadioGroup) rootView
 					.findViewById(R.id.playType_radioGroup);
 
-			matrixSizeRadio.setOnCheckedChangeListener(this);
-			playTypeRadio.setOnCheckedChangeListener(this);
+			matrixSizeRadio
+					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
-			updateBestScoreTextView();
+						@Override
+						public void onCheckedChanged(RadioGroup group,
+								int checkedId) {
+							switch (checkedId) {
+							case R.id.play_6x6_rbtn:
+								size = 36;
+								break;
+							case R.id.play_6x8_rbtn:
+								size = 48;
+								break;
+							default:
+								size = 36;
+								break;
+							}
+							updateBestScoreTextView(mode, size);
+						}
+					});
+
+			playTypeRadio
+					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+
+						@Override
+						public void onCheckedChanged(RadioGroup group,
+								int checkedId) {
+							switch (checkedId) {
+							case R.id.playType_increase:
+								mode = 1;
+								break;
+							case R.id.playType_decrease:
+								mode = 2;
+								break;
+							case R.id.playType_random:
+								mode = 3;
+								break;
+							}
+							updateBestScoreTextView(mode, size);
+						}
+					});
 			return rootView;
 		}
 
@@ -96,7 +133,7 @@ public class MainScreen extends ActionBarActivity {
 					break;
 				default:
 					game_setting.putInt("A", 6);
-					game_setting.putInt("B", 8);
+					game_setting.putInt("B", 6);
 					break;
 				}
 
@@ -122,28 +159,22 @@ public class MainScreen extends ActionBarActivity {
 				goToPlayActivity.putExtra("GAME_SETTING", game_setting);
 				startActivity(goToPlayActivity);
 				break;
-			case R.id.highScoreButton:
-				// Intent for High Score Button
-				Intent goToHighScoreActivity = new Intent(getActivity(),
-						HighScoreActivity.class);
-				startActivity(goToHighScoreActivity);
+			// case R.id.highScoreButton:
+			// // Intent for High Score Button
+			// Intent goToHighScoreActivity = new Intent(getActivity(),
+			// HighScoreActivity.class);
+			// startActivity(goToHighScoreActivity);
 
 			}
 
 		}
 
-		@Override
-		public void onCheckedChanged(RadioGroup arg0, int arg1) {
-			updateBestScoreTextView();
-
-		}
-
-		private void updateBestScoreTextView() {
-			int size = matrixSizeRadio.getCheckedRadioButtonId();
-			int mode = playTypeRadio.getCheckedRadioButtonId();
-			highscore = store.getHighscore(mode, size);
+		private void updateBestScoreTextView(int mode, int size) {
+			store = new StoreData(getActivity(), mode, size);
+			int highscore = store.getHighscore(mode, size);
 			displayScore.setText("Best score: " + highscore + " s");
 		}
+
 
 	}
 
