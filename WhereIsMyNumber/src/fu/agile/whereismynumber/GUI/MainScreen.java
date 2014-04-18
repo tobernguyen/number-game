@@ -28,7 +28,8 @@ public class MainScreen extends ActionBarActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main_screen);
-		customfont = Typeface.createFromAsset(getAssets(), "fonts/Karate.ttf");
+		customfont = Typeface.createFromAsset(getAssets(),
+				"fonts/BerlinSan.ttf");
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();

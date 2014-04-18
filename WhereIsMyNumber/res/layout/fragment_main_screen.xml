@@ -1,12 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/back_ground_mainscreen"
+    android:id="@+id/main_screen"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#293C4D"
     tools:context="fu.agile.whereismynumber.MainScreen$PlaceholderFragment" >
 
     <Button
@@ -15,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="230dp"
+        android:layout_marginTop="130dp"
         android:background="@drawable/button_play_press"
         android:padding="0dp"
         android:src="@drawable/play_button_up" />
@@ -23,7 +20,7 @@
     <RadioGroup
         android:id="@+id/playSize_radioGroup"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="290dp"
         android:gravity="center"
@@ -31,19 +28,21 @@
 
         <RadioButton
             android:id="@+id/play_6x6_rbtn"
+            android:button="@android:color/transparent"
             android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="6x6" />
+            android:layout_height="100dp"
+            android:background="@drawable/radiobutton66_selector"
+            android:gravity="center_vertical|center_horizontal" />
 
         <RadioButton
             android:id="@+id/play_6x8_rbtn"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_marginLeft="5dp"
+            android:background="@drawable/radiobutton68_selector"
+            android:button="@android:color/transparent"
             android:checked="true"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="6x8" />
+            android:gravity="center_vertical|center_horizontal" />
     </RadioGroup>
 
     <RadioGroup
@@ -51,39 +50,46 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/playSize_radioGroup"
+        android:gravity="center"
         android:orientation="horizontal" >
 
         <RadioButton
             android:id="@+id/playType_increase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Increase" />
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:button="@android:color/transparent"
+            android:background="@drawable/up_selector"/>
 
         <RadioButton
             android:id="@+id/playType_decrease"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Decrease" />
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:button="@android:color/transparent"
+            android:background="@drawable/down_selector" />
 
         <RadioButton
             android:id="@+id/playType_random"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:button="@android:color/transparent"
             android:checked="true"
-            android:text="Random" />
+            android:background="@drawable/random_selector" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/displayHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/playSize_radioGroup"
-        android:layout_below="@+id/playType_radioGroup"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/playType_radioGroup"
         android:layout_marginTop="27dp"
         android:text=""
+        android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="35dp" 
-        android:textColor="#FF645E"/>
+        android:textColor="#FFFFFF"
+        android:textSize="35dp" />
 
 </RelativeLayout>
