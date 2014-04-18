@@ -22,9 +22,9 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import fu.agile.whereismynumber.R;
@@ -108,8 +108,7 @@ public class PlayActivity extends ActionBarActivity {
 		// Context
 		Context mContext;
 		private Dialog custom;
-		private ImageButton menubtn;
-		private ImageButton replaybtn;
+		private Button menubtn, replaybtn;
 		private PlayActivity instance;
 		private TextView mscore;
 		private TextView mhighscore;
@@ -120,15 +119,15 @@ public class PlayActivity extends ActionBarActivity {
 			custom.getWindow().setBackgroundDrawable(
 					new ColorDrawable(android.graphics.Color.DKGRAY));
 			custom.setContentView(R.layout.dialog);
-			menubtn = (ImageButton) custom.findViewById(R.id.menubtn);
-			replaybtn = (ImageButton) custom.findViewById(R.id.replaybtn);
+			menubtn = (Button) custom.findViewById(R.id.menubtn);
+			replaybtn = (Button) custom.findViewById(R.id.replaybtn);
 			mscore = (TextView) custom.findViewById(R.id.score);
 			mhighscore = (TextView) custom.findViewById(R.id.highscore);
 			// custom.setTitle("Complete");
-			mscore.setText("Your score : " + score);
-			mhighscore.setText("High score : " + highscore);
-			mscore.setTextSize(40);
-			mhighscore.setTextSize(40);
+			mscore.setTypeface(customfont);
+			mhighscore.setTypeface(customfont);
+			mscore.setText("Best : " + score);
+			mhighscore.setText("Score : " + highscore);
 			custom.setCancelable(false);
 			custom.setCanceledOnTouchOutside(false);
 			menubtn.setOnClickListener(new View.OnClickListener() {
@@ -254,8 +253,9 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void getMatrixSize() {
 			// Tinh toan tong so chu so
-			amountOfNumbers = game_setting.getInt("A", 6)
-					* game_setting.getInt("B", 8);
+			amountOfNumbers = 4;
+			// game_setting.getInt("A", 6)
+			// * game_setting.getInt("B", 8);
 			numberOfColumns = game_setting.getInt("A", 6);
 		}
 
