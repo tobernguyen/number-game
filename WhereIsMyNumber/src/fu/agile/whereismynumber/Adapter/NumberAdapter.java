@@ -27,7 +27,7 @@ public class NumberAdapter extends BaseAdapter {
 		super();
 		this.context = context;
 		custom_font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/BABYK.ttf");
+				"fonts/Babelfish.ttf");
 
 		// Initiate default number
 		this.numbers = numbers;
@@ -90,6 +90,7 @@ public class NumberAdapter extends BaseAdapter {
 		// hinh)
 		TextView mTextView = viewHolder.textViewItem;
 		mTextView.setTypeface(custom_font);
+		mTextView.setTextSize(40);
 		mTextView.setWidth(cellSize);
 		mTextView.setHeight(cellSize);
 		mTextView.setText("" + numbers.get(position));
