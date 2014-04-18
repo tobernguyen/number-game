@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -115,22 +116,28 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void showDialog(Context context) {
 			custom = new Dialog(context);
+			custom.requestWindowFeature(Window.FEATURE_NO_TITLE);
+			custom.getWindow().setBackgroundDrawable(
+					new ColorDrawable(android.graphics.Color.DKGRAY));
 			custom.setContentView(R.layout.dialog);
 			menubtn = (ImageButton) custom.findViewById(R.id.menubtn);
 			replaybtn = (ImageButton) custom.findViewById(R.id.replaybtn);
 			mscore = (TextView) custom.findViewById(R.id.score);
 			mhighscore = (TextView) custom.findViewById(R.id.highscore);
-			custom.setTitle("Complete");
+			// custom.setTitle("Complete");
 			mscore.setText("Your score : " + score);
 			mhighscore.setText("High score : " + highscore);
-			mscore.setTextSize(20);
-			mhighscore.setTextSize(20);
+			mscore.setTextSize(40);
+			mhighscore.setTextSize(40);
+			custom.setCancelable(false);
+			custom.setCanceledOnTouchOutside(false);
 			menubtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					// TODO Auto-generated method stub
 					Intent goToMenu = new Intent(getActivity(),
 							MainScreen.class);
+					getActivity().finish();
 					startActivity(goToMenu);
 
 				}
@@ -146,6 +153,7 @@ public class PlayActivity extends ActionBarActivity {
 
 			});
 			custom.show();
+
 		}
 
 		@Override
