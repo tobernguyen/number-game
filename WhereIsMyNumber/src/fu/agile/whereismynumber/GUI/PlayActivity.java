@@ -23,11 +23,10 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Adapter.NumberAdapter;
 import fu.agile.whereismynumber.Adapter.ViewHolderItem;
@@ -104,16 +103,12 @@ public class PlayActivity extends ActionBarActivity {
 		private Animation slide_left_out;
 		private Animation slide_right_in;
 
-		// Bien hien thi diem high score
-		private TextView displayScore;
-
 		// Variable for sound
 		MySoundManager soundManager;
 
 		// Context
 		Context mContext;
 		private Dialog custom;
-		private Button menubtn, replaybtn;
 		private PlayActivity instance;
 		private TextView mscore;
 		private TextView mhighscore;
@@ -125,31 +120,28 @@ public class PlayActivity extends ActionBarActivity {
 			custom = new Dialog(context);
 			custom.requestWindowFeature(Window.FEATURE_NO_TITLE);
 			custom.getWindow().setBackgroundDrawable(
-					new ColorDrawable(android.graphics.Color.DKGRAY));
-			custom.setContentView(R.layout.dialog);
-			menubtn = (Button) custom.findViewById(R.id.menubtn);
-			replaybtn = (Button) custom.findViewById(R.id.replaybtn);
-			mscore = (TextView) custom.findViewById(R.id.score);
-			mhighscore = (TextView) custom.findViewById(R.id.highscore);
-			// custom.setTitle("Complete");
-			mscore.setTypeface(fontForText);
-			mhighscore.setTypeface(fontForText);
-			mscore.setText("Score : " + score);
-			mhighscore.setText("Best : " + highscore);
+					new ColorDrawable(android.graphics.Color.TRANSPARENT));
+			custom.setContentView(R.layout.gameover);
+
+			ImageView playBtn = (ImageView) custom.findViewById(R.id.play_btn);
+			ImageView menuBtn = (ImageView) custom.findViewById(R.id.menu_btn);
+			mscore = (TextView) custom.findViewById(R.id.curent_score);
+			mhighscore = (TextView) custom.findViewById(R.id.best_score);
+			mscore.setText("" + score);
+			mhighscore.setText("" + highscore);
 			custom.setCancelable(false);
 			custom.setCanceledOnTouchOutside(false);
-			menubtn.setOnClickListener(new View.OnClickListener() {
+			menuBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 
-					Intent goToMenu = new Intent(mContext,
-							MainScreen.class);
+					Intent goToMenu = new Intent(mContext, MainScreen.class);
 					((Activity) mContext).finish();
 					startActivity(goToMenu);
 
 				}
 			});
-			replaybtn.setOnClickListener(new View.OnClickListener() {
+			playBtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 
@@ -173,8 +165,6 @@ public class PlayActivity extends ActionBarActivity {
 			 */
 			initiateGamePlay();
 			getReferenceToView(rootView);
-			displayScore = (TextView) rootView
-					.findViewById(R.id.displayHighscore);
 			/*
 			 * Xu ly gridNumber
 			 */
@@ -320,15 +310,10 @@ public class PlayActivity extends ActionBarActivity {
 			int minutes = (int) (time - hours * 3600000) / 60000;
 			int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
 
-			Toast.makeText(mContext, "Completed:" + minutes + ":" + seconds,
-					Toast.LENGTH_SHORT).show();
 			score = seconds + minutes * 60;
 			store = new StoreData(mContext, GAME_TYPE, amountOfNumbers);
 			store.setHighscore(score, GAME_TYPE, amountOfNumbers);
 			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
-
-			Toast.makeText(mContext, "Highscore:" + highscore,
-					Toast.LENGTH_SHORT).show();
 			showDialog(mContext);
 		}
 
