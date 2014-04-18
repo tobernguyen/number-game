@@ -2,49 +2,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00000000"
-    android:orientation="vertical" >
-
-    <ImageButton
+    android:orientation="vertical"
+    android:background="#FFF6A8" >
+    <Button
         android:id="@+id/menubtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/replaybtn"
         android:layout_alignBottom="@+id/replaybtn"
         android:padding="0dp"
-        android:src="@drawable/btnmenu" />
-
-    <ImageButton
-        android:id="@+id/replaybtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginRight="28dp"
-        android:layout_marginTop="98dp"
-        android:padding="0dp"
-        android:src="@drawable/btnreplay" />
+        android:background="@drawable/btnmenu" />
 
     <TextView
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="32dp"
-        android:layout_toLeftOf="@+id/replaybtn"
-        android:fontFamily="sans-serif-italic"
+        android:layout_marginTop="43dp"
+        android:layout_toRightOf="@+id/menubtn"
         android:text="Your score: "
-        android:textStyle="italic" />
+        android:textColor="#FF6016"
+        android:textSize="35dp" />
+
+    <Button
+        android:id="@+id/replaybtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/highscore"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@+id/highscore"
+        android:background="@drawable/btnplay"
+        android:padding="0dp" />
 
     <TextView
         android:id="@+id/highscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/menubtn"
-        android:layout_marginBottom="18dp"
-        android:layout_toLeftOf="@+id/replaybtn"
-        android:fontFamily="sans-serif-italic"
-        android:textStyle="italic"
-        android:text="Highscore: " />
+        android:layout_alignRight="@+id/score"
+        android:layout_below="@+id/score"
+        android:layout_marginTop="38dp"
+        android:text="Highscore: "
+        android:textColor="#FF6016"
+        android:textSize="35dp" />
 
 </RelativeLayout>
