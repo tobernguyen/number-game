@@ -12,33 +12,33 @@ import android.widget.TextView;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.GUI.MainScreen;
 
-public class MyDialog {
-	private Dialog custom;
+public class MyDialog extends Dialog {
 	private TextView mscore;
 	private TextView mhighscore;
 	private Context mContext;
 
-	public MyDialog(Context mContext) {
-		this.mContext = mContext;
+	public MyDialog(Context context) {
+		super(context);
+		mContext = context;
 	}
 
 	/*
 	 * Dialog for end game
 	 */
 	public void showDialogEndGame(int score, int highscore) {
-		custom.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		custom.getWindow().setBackgroundDrawable(
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setBackgroundDrawable(
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
-		custom.setContentView(R.layout.gameover);
+		setContentView(R.layout.gameover);
 
-		ImageView playBtn = (ImageView) custom.findViewById(R.id.play_btn);
-		ImageView menuBtn = (ImageView) custom.findViewById(R.id.menu_btn);
-		mscore = (TextView) custom.findViewById(R.id.curent_score);
-		mhighscore = (TextView) custom.findViewById(R.id.best_score);
+		ImageView playBtn = (ImageView) findViewById(R.id.play_btn);
+		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
+		mscore = (TextView) findViewById(R.id.curent_score);
+		mhighscore = (TextView) findViewById(R.id.best_score);
 		mscore.setText("" + score);
 		mhighscore.setText("" + highscore);
-		custom.setCancelable(false);
-		custom.setCanceledOnTouchOutside(false);
+		setCancelable(false);
+		setCanceledOnTouchOutside(false);
 		menuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -59,7 +59,7 @@ public class MyDialog {
 			}
 
 		});
-		custom.show();
+		show();
 
 	}
 }
