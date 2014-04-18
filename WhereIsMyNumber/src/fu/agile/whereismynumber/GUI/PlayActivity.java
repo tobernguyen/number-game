@@ -79,12 +79,13 @@ public class PlayActivity extends ActionBarActivity {
 		// Variable to handle Views
 		private GridView gridNumber;
 		private TextView targetNumberTextView;
+		private TextView bestScoreTextView;
 
 		// The method of android to display stop watch
 		private Chronometer mChronometer;
 
 		// Number of column to divide
-		int numberOfColumns;
+		private int numberOfColumns;
 
 		// Variable of score time
 		private long time;
@@ -98,10 +99,10 @@ public class PlayActivity extends ActionBarActivity {
 		private Animation slide_right_in;
 
 		// Variable for sound
-		MySoundManager soundManager;
+		private MySoundManager soundManager;
 
 		// Context
-		Context mContext;
+		private Context mContext;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -166,10 +167,14 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void gameStart() {
 			mChronometer.start();
-			mChronometer.setTypeface(fontForText);
+			// mChronometer.setTypeface(fontForText);
 			targetNumberTextView.setTypeface(fontForText);
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
+
+			// Hien thi thoi gian tot nhat
+			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
+			bestScoreTextView.setText(store.getBestTime(highscore));
 		}
 
 		private void initiateGamePlay() {
@@ -193,6 +198,17 @@ public class PlayActivity extends ActionBarActivity {
 			mContext = getActivity();
 			soundManager = new MySoundManager(mContext);
 			dialogManager = new MyDialog(mContext);
+			store = new StoreData(mContext, GAME_TYPE, amountOfNumbers);
+		}
+
+		private void getReferenceToView(View currentView) {
+			mChronometer = (Chronometer) currentView
+					.findViewById(R.id.chronometer);
+			gridNumber = (GridView) currentView.findViewById(R.id.gridView);
+			targetNumberTextView = (TextView) currentView
+					.findViewById(R.id.targetNumberTextView);
+			bestScoreTextView = (TextView) currentView
+					.findViewById(R.id.bestScoreTextView);
 		}
 
 		private void loadAnimation() {
@@ -260,9 +276,8 @@ public class PlayActivity extends ActionBarActivity {
 			int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
 
 			score = seconds + minutes * 60;
-			store = new StoreData(mContext, GAME_TYPE, amountOfNumbers);
+
 			store.setHighscore(score, GAME_TYPE, amountOfNumbers);
-			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
 
 			// Show dialog when end game
 			dialogManager.showDialogEndGame(score, highscore);
@@ -281,13 +296,6 @@ public class PlayActivity extends ActionBarActivity {
 			index++;
 		}
 
-		private void getReferenceToView(View currentView) {
-			mChronometer = (Chronometer) currentView
-					.findViewById(R.id.chronometer);
-			gridNumber = (GridView) currentView.findViewById(R.id.gridView);
-			targetNumberTextView = (TextView) currentView
-					.findViewById(R.id.targetNumberTextView);
-		}
 	}
 
 }
