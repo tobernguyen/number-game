@@ -63,7 +63,7 @@ public class MainScreen extends ActionBarActivity {
 			game_setting = new Bundle();
 			displayScore = (TextView) rootView
 					.findViewById(R.id.displayHighscore);
-
+			updateBestScoreTextView(mode, size);
 			// OnClickListener for each button
 			playButton.setOnClickListener(this);
 
@@ -76,7 +76,6 @@ public class MainScreen extends ActionBarActivity {
 
 			matrixSizeRadio
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
 						@Override
 						public void onCheckedChanged(RadioGroup group,
 								int checkedId) {
