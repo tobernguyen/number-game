@@ -27,7 +27,7 @@ public class NumberAdapter extends BaseAdapter {
 		super();
 		this.context = context;
 		custom_font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/comic.ttf");
+				"fonts/BABYK.ttf");
 
 		// Initiate default number
 		this.numbers = numbers;
