@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
@@ -25,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Chronometer;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Adapter.NumberAdapter;
@@ -33,6 +29,7 @@ import fu.agile.whereismynumber.Adapter.ViewHolderItem;
 import fu.agile.whereismynumber.Enquity.Config;
 import fu.agile.whereismynumber.Enquity.Number;
 import fu.agile.whereismynumber.Enquity.StoreData;
+import fu.agile.whereismynumber.Utils.MyDialog;
 import fu.agile.whereismynumber.Utils.MySoundManager;
 
 public class PlayActivity extends ActionBarActivity {
@@ -51,16 +48,14 @@ public class PlayActivity extends ActionBarActivity {
 		}
 	}
 
-	protected void reload() {
-		Intent intent = getIntent();
-		finish();
-		startActivity(intent);
-	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+		// Variables for MyDialog
+		private MyDialog dialogManager;
+
 		// Custom font for X character
 		private Typeface X_font;
 		private Typeface fontForText;
@@ -108,52 +103,6 @@ public class PlayActivity extends ActionBarActivity {
 
 		// Context
 		Context mContext;
-		private Dialog custom;
-		private PlayActivity instance;
-		private TextView mscore;
-		private TextView mhighscore;
-
-		/*
-		 * Dialog for end game
-		 */
-		private void showDialog(Context context) {
-			custom = new Dialog(context);
-			custom.requestWindowFeature(Window.FEATURE_NO_TITLE);
-			custom.getWindow().setBackgroundDrawable(
-					new ColorDrawable(android.graphics.Color.TRANSPARENT));
-			custom.setContentView(R.layout.gameover);
-
-			ImageView playBtn = (ImageView) custom.findViewById(R.id.play_btn);
-			ImageView menuBtn = (ImageView) custom.findViewById(R.id.menu_btn);
-			mscore = (TextView) custom.findViewById(R.id.curent_score);
-			mhighscore = (TextView) custom.findViewById(R.id.best_score);
-			mscore.setText("" + score);
-			mhighscore.setText("" + highscore);
-			custom.setCancelable(false);
-			custom.setCanceledOnTouchOutside(false);
-			menuBtn.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-
-					Intent goToMenu = new Intent(mContext, MainScreen.class);
-					((Activity) mContext).finish();
-					startActivity(goToMenu);
-
-				}
-			});
-			playBtn.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-
-					instance = (PlayActivity) mContext;
-					instance.reload();
-
-				}
-
-			});
-			custom.show();
-
-		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -244,6 +193,7 @@ public class PlayActivity extends ActionBarActivity {
 		private void iniResources() {
 			mContext = getActivity();
 			soundManager = new MySoundManager(mContext);
+			dialogManager = new MyDialog(mContext);
 		}
 
 		private void loadAnimation() {
@@ -314,7 +264,9 @@ public class PlayActivity extends ActionBarActivity {
 			store = new StoreData(mContext, GAME_TYPE, amountOfNumbers);
 			store.setHighscore(score, GAME_TYPE, amountOfNumbers);
 			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
-			showDialog(mContext);
+
+			// Show dialog when end game
+			dialogManager.showDialogEndGame(score, highscore);
 		}
 
 		private void printNextTargetNumber() {
