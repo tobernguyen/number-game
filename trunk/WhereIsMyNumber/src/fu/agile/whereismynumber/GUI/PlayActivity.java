@@ -218,6 +218,7 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void gameStart() {
 			mChronometer.start();
+			mChronometer.setTypeface(customfont);
 			targetNumberTextView.setTypeface(customfont);
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
