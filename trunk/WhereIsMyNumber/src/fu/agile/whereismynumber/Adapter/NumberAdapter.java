@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
+import fu.agile.whereismynumber.Enquity.Config;
 import fu.agile.whereismynumber.Enquity.Number;
 
 public class NumberAdapter extends BaseAdapter {
@@ -20,14 +21,14 @@ public class NumberAdapter extends BaseAdapter {
 	private Context context;
 	private ArrayList<Number> numbers;
 	private int screen_width, cellSize;
-	private Typeface custom_font;
+	private Typeface font_for_number_on_grid;
 
 	public NumberAdapter(Context context, ArrayList<Number> numbers,
 			int numberOfColumns) {
 		super();
 		this.context = context;
-		custom_font = Typeface.createFromAsset(context.getAssets(),
-				"fonts/Babelfish.ttf");
+		font_for_number_on_grid = Typeface.createFromAsset(context.getAssets(),
+				Config.Font.NUMBER_ON_GRID_FONT);
 
 		// Initiate default number
 		this.numbers = numbers;
@@ -89,8 +90,8 @@ public class NumberAdapter extends BaseAdapter {
 		// Tuy chinh kich thuoc cua cell theo cellSize (theo kich thuoc man
 		// hinh)
 		TextView mTextView = viewHolder.textViewItem;
-		mTextView.setTypeface(custom_font);
-		mTextView.setTextSize(40);
+		mTextView.setTypeface(font_for_number_on_grid);
+		mTextView.setTextSize(20);
 		mTextView.setWidth(cellSize);
 		mTextView.setHeight(cellSize);
 		mTextView.setText("" + numbers.get(position));
