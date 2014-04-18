@@ -44,16 +44,23 @@ public class StoreData {
 		return highscore;
 	}
 
-	public int getHighscoreMinute(int highscore) {
-		highscore = (int) highscore / 60;
-		return highscore;
+	public String getBestTime(int highscore) {
+		int minute = (int) highscore / 60;
+		int second = (int) highscore - 60 * ((int) highscore / 60);
+		String time = "";
+		if (minute < 10 && second < 10) {
+			time = "0" + minute + ":" + "0" + second;
+		} else if (minute < 10 && second > 10) {
+			time = "0" + minute + ":" + second;
+		} else if (minute > 10 && second < 10) {
+			time = minute + ":" + "0" + second;
+		} else if (minute > 10 && second > 10) {
+			time = minute + ":" + second;
+		}
+		return time;
 	}
 
-	public int getHighscoreSecond(int highscore) {
-		highscore = (int) highscore - 60 * ((int) highscore / 60);
-		return highscore;
 
-	}
 	// Cai dat am thanh luu va trong data
 	public void setSound(boolean settingSound) {
 		editSound.putBoolean("sound", settingSound);
