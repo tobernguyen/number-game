@@ -127,8 +127,8 @@ public class PlayActivity extends ActionBarActivity {
 			// custom.setTitle("Complete");
 			mscore.setTypeface(customfont);
 			mhighscore.setTypeface(customfont);
-			mscore.setText("Best : " + score);
-			mhighscore.setText("Score : " + highscore);
+			mscore.setText("Score : " + score);
+			mhighscore.setText("Best : " + highscore);
 			custom.setCancelable(false);
 			custom.setCanceledOnTouchOutside(false);
 			menubtn.setOnClickListener(new View.OnClickListener() {
