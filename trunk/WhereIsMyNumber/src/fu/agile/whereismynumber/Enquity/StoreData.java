@@ -44,6 +44,16 @@ public class StoreData {
 		return highscore;
 	}
 
+	public int getHighscoreMinute(int highscore) {
+		highscore = (int) highscore / 60;
+		return highscore;
+	}
+
+	public int getHighscoreSecond(int highscore) {
+		highscore = (int) highscore - 60 * ((int) highscore / 60);
+		return highscore;
+
+	}
 	// Cai dat am thanh luu va trong data
 	public void setSound(boolean settingSound) {
 		editSound.putBoolean("sound", settingSound);
