@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -23,6 +25,9 @@ public class MainScreen extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main_screen);
 		customfont = Typeface.createFromAsset(getAssets(), "fonts/Karate.ttf");
 		if (savedInstanceState == null) {
@@ -175,7 +180,7 @@ public class MainScreen extends ActionBarActivity {
 			store = new StoreData(getActivity(), mode, size);
 			int highscore = store.getHighscore(mode, size);
 			displayScore.setTypeface(customfont);
-			displayScore.setText("Best: " + highscore + " s");
+			displayScore.setText("Best: " + highscore);
 		}
 
 	}

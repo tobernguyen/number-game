@@ -21,7 +21,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="30sp"
+        android:textSize="50sp"
         android:textColor="#FF0B03"
         android:text="Target Number"
         android:textAppearance="?android:attr/textAppearanceLarge" />
