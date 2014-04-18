@@ -48,7 +48,6 @@ public class PlayActivity extends ActionBarActivity {
 		}
 	}
 
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
