@@ -70,7 +70,6 @@ public class MainScreen extends ActionBarActivity {
 			// Get references to playSize_radioGroup
 			matrixSizeRadio = (RadioGroup) rootView
 					.findViewById(R.id.playSize_radioGroup);
-
 			// Get references to playSize_radioGroup
 			playTypeRadio = (RadioGroup) rootView
 					.findViewById(R.id.playType_radioGroup);
@@ -179,8 +178,14 @@ public class MainScreen extends ActionBarActivity {
 		private void updateBestScoreTextView(int mode, int size) {
 			store = new StoreData(getActivity(), mode, size);
 			int highscore = store.getHighscore(mode, size);
-			displayScore.setTypeface(customfont);
-			displayScore.setText("Best: " + highscore);
+			if (highscore == 99999) {
+				displayScore.setTypeface(customfont);
+				displayScore.setText("Best: " + 0);
+			} else {
+				displayScore.setTypeface(customfont);
+				displayScore.setText("Best: " + highscore);
+			}
+
 		}
 
 	}
