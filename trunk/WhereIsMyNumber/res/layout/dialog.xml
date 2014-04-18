@@ -1,0 +1,45 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageButton
+        android:id="@+id/menubtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/replaybtn"
+        android:layout_alignBottom="@+id/replaybtn"
+        android:padding="0dp"
+        android:src="@drawable/btnmenu" />
+
+    <ImageButton
+        android:id="@+id/replaybtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="98dp"
+        android:padding="0dp"
+        android:src="@drawable/btnreplay" />
+
+    <TextView
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:layout_toLeftOf="@+id/replaybtn"
+        android:text="Your score: " />
+
+    <TextView
+        android:id="@+id/highscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/menubtn"
+        android:layout_marginBottom="18dp"
+        android:layout_toLeftOf="@+id/replaybtn"
+        android:text="Highscore: " />
+
+</RelativeLayout>

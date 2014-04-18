@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -21,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Chronometer;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import fu.agile.whereismynumber.R;
@@ -45,6 +48,12 @@ public class PlayActivity extends ActionBarActivity {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+	}
+
+	protected void reload() {
+		Intent intent = getIntent();
+		finish();
+		startActivity(intent);
 	}
 
 	/**
@@ -97,6 +106,47 @@ public class PlayActivity extends ActionBarActivity {
 
 		// Context
 		Context mContext;
+		private Dialog custom;
+		private ImageButton menubtn;
+		private ImageButton replaybtn;
+		private PlayActivity instance;
+		private TextView mscore;
+		private TextView mhighscore;
+
+		private void showDialog(Context context) {
+			custom = new Dialog(context);
+			custom.setContentView(R.layout.dialog);
+			menubtn = (ImageButton) custom.findViewById(R.id.menubtn);
+			replaybtn = (ImageButton) custom.findViewById(R.id.replaybtn);
+			mscore = (TextView) custom.findViewById(R.id.score);
+			mhighscore = (TextView) custom.findViewById(R.id.highscore);
+			custom.setTitle("Complete");
+			mscore.setText("Your score : " + score);
+			mhighscore.setText("High score : " + highscore);
+			mscore.setTextSize(20);
+			mhighscore.setTextSize(20);
+			menubtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					Intent goToMenu = new Intent(getActivity(),
+							MainScreen.class);
+					startActivity(goToMenu);
+
+				}
+			});
+			replaybtn.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// TODO Auto-generated method stub
+					instance = (PlayActivity) getActivity();
+					instance.reload();
+
+				}
+
+			});
+			custom.show();
+		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -251,6 +301,7 @@ public class PlayActivity extends ActionBarActivity {
 
 			Toast.makeText(mContext, "Highscore:" + highscore,
 					Toast.LENGTH_SHORT).show();
+			showDialog(getActivity());
 		}
 
 		private void printNextTargetNumber() {
