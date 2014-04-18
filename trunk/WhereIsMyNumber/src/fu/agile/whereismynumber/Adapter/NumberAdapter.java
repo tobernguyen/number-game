@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ public class NumberAdapter extends BaseAdapter {
 	private ArrayList<Number> numbers;
 	private int screen_width, cellSize;
 	private Typeface font_for_number_on_grid;
+	private int backGround_1;
+	private int backGround_2;
 
 	public NumberAdapter(Context context, ArrayList<Number> numbers,
 			int numberOfColumns) {
@@ -44,6 +47,10 @@ public class NumberAdapter extends BaseAdapter {
 
 		// Tuy chinh cellSize dua theo kich thuoc man hinh va so cot
 		cellSize = screen_width / numberOfColumns;
+
+		// Get drawable ID
+		backGround_1 = R.drawable.stroke;
+		backGround_2 = R.drawable.stroke_2;
 	}
 
 	@Override
@@ -75,7 +82,7 @@ public class NumberAdapter extends BaseAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.grid_number, null);
 
-			// set upthe ViewHolder
+			// set up the ViewHolder
 			viewHolder = new ViewHolderItem();
 			viewHolder.textViewItem = (TextView) convertView
 					.findViewById(R.id.gridValue);
@@ -90,6 +97,37 @@ public class NumberAdapter extends BaseAdapter {
 		// Tuy chinh kich thuoc cua cell theo cellSize (theo kich thuoc man
 		// hinh)
 		TextView mTextView = viewHolder.textViewItem;
+
+		// Set color
+
+		int backGroundResourceID = backGround_1;
+		switch (position % 12) {
+		case 0:
+		case 2:
+		case 4:
+		case 7:
+		case 9:
+		case 11:
+			// colorCode = "#17b287";
+			backGroundResourceID = backGround_1;
+			break;
+		case 1:
+		case 3:
+		case 5:
+		case 6:
+		case 8:
+		case 10:
+			// colorCode = "#0776b8";
+			backGroundResourceID = backGround_2;
+			break;
+		default:
+			break;
+		}
+
+		mTextView.setBackgroundResource(backGroundResourceID);
+		mTextView.setTextColor(Color.WHITE);
+		// mTextView.setBackgroundColor(Color.parseColor(colorCode));
+
 		mTextView.setTypeface(font_for_number_on_grid);
 		mTextView.setTextSize(20);
 		mTextView.setWidth(cellSize);
