@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -190,6 +191,8 @@ public class PlayActivity extends ActionBarActivity {
 
 						// Chuyen thanh dau X
 						TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
+						mTextView.setTextColor(Color.RED);
+						mTextView.setTextSize(80);
 						mTextView.setText("X");
 
 						try {
@@ -253,9 +256,9 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void getMatrixSize() {
 			// Tinh toan tong so chu so
-			amountOfNumbers = 4;
-			// game_setting.getInt("A", 6)
-			// * game_setting.getInt("B", 8);
+			amountOfNumbers = game_setting.getInt("A", 6)
+					* game_setting.getInt("B", 8);
+
 			numberOfColumns = game_setting.getInt("A", 6);
 		}
 
