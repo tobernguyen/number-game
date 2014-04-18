@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -49,7 +48,6 @@ public class MainScreen extends ActionBarActivity {
 		private TextView displayScore;
 		private StoreData store;
 		private int mode, size;
-		private RadioButton radiobutton;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,

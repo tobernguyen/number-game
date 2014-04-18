@@ -31,12 +31,12 @@ import android.widget.Toast;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Adapter.NumberAdapter;
 import fu.agile.whereismynumber.Adapter.ViewHolderItem;
+import fu.agile.whereismynumber.Enquity.Config;
 import fu.agile.whereismynumber.Enquity.Number;
 import fu.agile.whereismynumber.Enquity.StoreData;
 import fu.agile.whereismynumber.Utils.MySoundManager;
 
 public class PlayActivity extends ActionBarActivity {
-	private static Typeface customfont;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class PlayActivity extends ActionBarActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_play);
-		customfont = Typeface.createFromAsset(getAssets(), "fonts/Karate.ttf");
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -62,6 +62,10 @@ public class PlayActivity extends ActionBarActivity {
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+		// Custom font for X character
+		private Typeface X_font;
+		private Typeface fontForText;
+
 		// Bundle for game setting, get from MainScreen
 		private Bundle game_setting;
 		private int GAME_TYPE;
@@ -114,6 +118,9 @@ public class PlayActivity extends ActionBarActivity {
 		private TextView mscore;
 		private TextView mhighscore;
 
+		/*
+		 * Dialog for end game
+		 */
 		private void showDialog(Context context) {
 			custom = new Dialog(context);
 			custom.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -125,8 +132,8 @@ public class PlayActivity extends ActionBarActivity {
 			mscore = (TextView) custom.findViewById(R.id.score);
 			mhighscore = (TextView) custom.findViewById(R.id.highscore);
 			// custom.setTitle("Complete");
-			mscore.setTypeface(customfont);
-			mhighscore.setTypeface(customfont);
+			mscore.setTypeface(fontForText);
+			mhighscore.setTypeface(fontForText);
 			mscore.setText("Score : " + score);
 			mhighscore.setText("Best : " + highscore);
 			custom.setCancelable(false);
@@ -134,10 +141,10 @@ public class PlayActivity extends ActionBarActivity {
 			menubtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					// TODO Auto-generated method stub
-					Intent goToMenu = new Intent(getActivity(),
+
+					Intent goToMenu = new Intent(mContext,
 							MainScreen.class);
-					getActivity().finish();
+					((Activity) mContext).finish();
 					startActivity(goToMenu);
 
 				}
@@ -145,8 +152,8 @@ public class PlayActivity extends ActionBarActivity {
 			replaybtn.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					// TODO Auto-generated method stub
-					instance = (PlayActivity) getActivity();
+
+					instance = (PlayActivity) mContext;
 					instance.reload();
 
 				}
@@ -191,6 +198,7 @@ public class PlayActivity extends ActionBarActivity {
 
 						// Chuyen thanh dau X
 						TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
+						mTextView.setTypeface(X_font);
 						mTextView.setTextColor(Color.RED);
 						mTextView.setTextSize(80);
 						mTextView.setText("X");
@@ -220,8 +228,8 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void gameStart() {
 			mChronometer.start();
-			mChronometer.setTypeface(customfont);
-			targetNumberTextView.setTypeface(customfont);
+			mChronometer.setTypeface(fontForText);
+			targetNumberTextView.setTypeface(fontForText);
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
 		}
@@ -233,6 +241,14 @@ public class PlayActivity extends ActionBarActivity {
 			createGridNumberList();
 			createTargetNumberList();
 			loadAnimation();
+			loadFont();
+		}
+
+		private void loadFont() {
+			X_font = Typeface.createFromAsset(mContext.getAssets(),
+					Config.Font.RIGHT_ANSWER_TEXT_FONT);
+			fontForText = Typeface.createFromAsset(mContext.getAssets(),
+					Config.Font.PLAY_ACTIVITY_TEXTVIEW_FONT);
 		}
 
 		private void iniResources() {
@@ -313,7 +329,7 @@ public class PlayActivity extends ActionBarActivity {
 
 			Toast.makeText(mContext, "Highscore:" + highscore,
 					Toast.LENGTH_SHORT).show();
-			showDialog(getActivity());
+			showDialog(mContext);
 		}
 
 		private void printNextTargetNumber() {
