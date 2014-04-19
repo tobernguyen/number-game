@@ -46,7 +46,7 @@ public class StoreData {
 
 	public String getBestTime(int highscore) {
 		if (highscore == 99999)
-			return "I'm new";
+			return "Not yet :(";
 		int minute = (int) highscore / 60;
 		int second = (int) highscore - 60 * ((int) highscore / 60);
 		String time = "";

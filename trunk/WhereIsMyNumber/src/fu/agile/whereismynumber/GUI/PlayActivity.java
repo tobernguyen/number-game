@@ -139,7 +139,7 @@ public class PlayActivity extends ActionBarActivity {
 						TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
 						mTextView.setTypeface(X_font);
 						mTextView.setTextColor(Color.RED);
-						mTextView.setTextSize(80);
+						mTextView.setTextSize(70);
 						mTextView.setText("X");
 
 						try {
@@ -167,8 +167,7 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void gameStart() {
 			mChronometer.start();
-			// mChronometer.setTypeface(fontForText);
-			targetNumberTextView.setTypeface(fontForText);
+
 			targetNumberTextView
 					.setText(listNumberTarget.get(index).toString());
 
@@ -194,6 +193,19 @@ public class PlayActivity extends ActionBarActivity {
 					Config.Font.PLAY_ACTIVITY_TEXTVIEW_FONT);
 		}
 
+		private void setFont(View currentView) {
+			mChronometer.setTypeface(fontForText);
+			targetNumberTextView.setTypeface(fontForText);
+
+			TextView bestTimeTitleTv = (TextView) currentView
+					.findViewById(R.id.bestTimeTitleTv);
+			bestTimeTitleTv.setTypeface(fontForText);
+
+			TextView currentTimeTitleTv = (TextView) currentView
+					.findViewById(R.id.currentTimeTitleTv);
+			currentTimeTitleTv.setTypeface(fontForText);
+		}
+
 		private void iniResources() {
 			mContext = getActivity();
 			soundManager = new MySoundManager(mContext);
@@ -209,6 +221,9 @@ public class PlayActivity extends ActionBarActivity {
 					.findViewById(R.id.targetNumberTextView);
 			bestScoreTextView = (TextView) currentView
 					.findViewById(R.id.bestScoreTextView);
+
+			// Set custom font for system static TextView
+			setFont(currentView);
 		}
 
 		private void loadAnimation() {
