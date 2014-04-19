@@ -129,9 +129,9 @@ public class NumberAdapter extends BaseAdapter {
 		// mTextView.setBackgroundColor(Color.parseColor(colorCode));
 
 		mTextView.setTypeface(font_for_number_on_grid);
-		mTextView.setTextSize(20);
-		mTextView.setWidth(cellSize);
-		mTextView.setHeight(cellSize);
+		// mTextView.setTextSize(20);
+		// mTextView.setWidth(cellSize);
+		// mTextView.setHeight(cellSize);
 		mTextView.setText("" + numbers.get(position));
 
 		return convertView;

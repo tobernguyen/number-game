@@ -31,20 +31,8 @@
                 android:value="fu.agile.whereismynumber.GUI.MainScreen" />
         </activity>
         <activity
-            android:name="fu.agile.whereismynumber.GUI.SelectDifficultLevel"
-            android:label="@string/title_activity_select_difficult_level"
-            android:parentActivityName="fu.agile.whereismynumber.GUI.SelectPlayType" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="fu.agile.whereismynumber.GUI.SelectPlayType" />
-        </activity>
-        <activity
             android:name="fu.agile.whereismynumber.GUI.PlayActivity"
             android:label="@string/title_activity_play" >
-        </activity>
-        <activity
-            android:name="fu.agile.whereismynumber.GUI.HighScoreActivity"
-            android:label="@string/title_activity_high_score" >
         </activity>
     </application>
 

@@ -6,12 +6,11 @@
 
     <TextView
         android:id="@+id/gridValue"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:background="@drawable/stroke"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center"
         android:maxLength="3"
-        android:textSize="22sp" />
-
-    
+        android:textSize="23sp"
+        android:textStyle="bold" />
 </LinearLayout>

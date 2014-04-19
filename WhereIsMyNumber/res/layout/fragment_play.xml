@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#e89f2e"
+    android:background="@drawable/play_bg"
+    android:gravity="center_vertical"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="fu.agile.whereismynumber.PlayActivity$PlaceholderFragment"
-    android:gravity="center_vertical" >
+    tools:context="fu.agile.whereismynumber.PlayActivity$PlaceholderFragment" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -17,80 +17,111 @@
         android:orientation="horizontal"
         android:weightSum="3" >
 
-        <LinearLayout
-            android:layout_width="fill_parent"
+        <ImageView
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:src="@drawable/pause_btn" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp" >
+
+            <ImageView
+                android:layout_width="106dp"
+                android:layout_height="106dp"
+                android:src="@drawable/target_number_bg" />
+
+            <TextView
+                android:id="@+id/targetNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@android:color/white"
+                android:textSize="60sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="2" >
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:background="@drawable/best_score_bg"
+                android:orientation="vertical"
+                android:weightSum="2" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/bestTimeTitleTv"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Best: "
-                    android:textAppearance="?android:attr/textAppearanceMedium" >
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Best Time"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" >
                 </TextView>
 
                 <TextView
                     android:id="@+id/bestScoreTextView"
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
                     android:text="00:00"
-                    android:textAppearance="?android:attr/textAppearanceMedium" >
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" >
                 </TextView>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal" >
+                android:layout_marginTop="3.5dp"
+                android:background="@drawable/current_score_bg"
+                android:orientation="vertical" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/currentTimeTitleTv"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="You : "
-                    android:textAppearance="?android:attr/textAppearanceMedium" >
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Your Time"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" >
                 </TextView>
 
                 <Chronometer
                     android:id="@+id/chronometer"
-                    android:layout_width="82dp"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/targetNumberTextView"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center_horizontal"
-            android:text="1"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="#FF0B03"
-            android:textSize="30sp" />
-
-        <ImageView
-            android:id="@+id/pause_btn"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/ic_pause_btn" />
     </LinearLayout>
 
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:horizontalSpacing="3dp"
-        android:verticalSpacing="3dp"
-        android:numColumns="6" >
+        android:layout_marginLeft="0.7dp"
+        android:layout_marginTop="4.5dp"
+        android:horizontalSpacing="6.5dp"
+        android:numColumns="6"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:verticalSpacing="6dp" >
+
     </GridView>
 
 </LinearLayout>

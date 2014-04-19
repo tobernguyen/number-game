@@ -16,10 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
+import fu.agile.whereismynumber.Enquity.Config;
 import fu.agile.whereismynumber.Enquity.StoreData;
 
 public class MainScreen extends ActionBarActivity {
-	private static Typeface customfont;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,7 @@ public class MainScreen extends ActionBarActivity {
 		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main_screen);
-		customfont = Typeface.createFromAsset(getAssets(),
-				"fonts/BerlinSan.ttf");
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
@@ -55,14 +54,23 @@ public class MainScreen extends ActionBarActivity {
 				Bundle savedInstanceState) {
 			final View rootView = inflater.inflate(
 					R.layout.fragment_main_screen, container, false);
+
+			// Khoi tao kieu choi mac dinh
 			mode = 3;
 			size = 48;
+
+
+
 			// Get resources
 			playButton = (Button) rootView.findViewById(R.id.playButton);
 			game_setting = new Bundle();
 			displayScore = (TextView) rootView
 					.findViewById(R.id.displayHighscore);
 			updateBestScoreTextView(mode, size);
+
+			// Set font
+			setFont();
+
 			// OnClickListener for each button
 			playButton.setOnClickListener(this);
 
@@ -177,13 +185,18 @@ public class MainScreen extends ActionBarActivity {
 			store = new StoreData(getActivity(), mode, size);
 			int highscore = store.getHighscore(mode, size);
 			if (highscore == 99999) {
-				displayScore.setTypeface(customfont);
 				displayScore.setText("Best: " + 0);
 			} else {
-				displayScore.setTypeface(customfont);
 				displayScore.setText("Best: " + highscore);
 			}
 
+		}
+
+		private void setFont() {
+			Typeface customfont;
+			customfont = Typeface.createFromAsset(getActivity().getAssets(),
+					Config.Font.MAIN_SCREEN_FONT);
+			displayScore.setTypeface(customfont);
 		}
 
 	}
