@@ -44,11 +44,11 @@ public class StoreData {
 		return highscore;
 	}
 
-	public String getBestTime(int highscore) {
-		if (highscore == 99999)
+	public static String getTimeFromMiliseconds(long miliseconds) {
+		if (miliseconds == 99999)
 			return "Not yet :(";
-		int minute = (int) highscore / 60;
-		int second = (int) highscore - 60 * ((int) highscore / 60);
+		int minute = (int) miliseconds / 60;
+		int second = (int) miliseconds - 60 * ((int) miliseconds / 60);
 		String time = "";
 		if (minute < 10 && second < 10) {
 			time = "0" + minute + ":" + "0" + second;

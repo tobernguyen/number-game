@@ -173,7 +173,7 @@ public class PlayActivity extends ActionBarActivity {
 
 			// Hien thi thoi gian tot nhat
 			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
-			bestScoreTextView.setText(store.getBestTime(highscore));
+			bestScoreTextView.setText(store.getTimeFromMiliseconds(highscore));
 		}
 
 		private void initiateGamePlay() {
