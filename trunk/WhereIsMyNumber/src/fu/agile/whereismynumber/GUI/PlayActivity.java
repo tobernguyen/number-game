@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -89,7 +88,7 @@ public class PlayActivity extends ActionBarActivity {
 
 		// The method of android to display stop watch
 		private Chronometer mChronometer;
-		private long timeWhenStopped;
+		// private long timeWhenStopped;
 
 		// Number of column to divide
 		private int numberOfColumns;
@@ -335,23 +334,23 @@ public class PlayActivity extends ActionBarActivity {
 			index++;
 		}
 
-		@Override
-		public void onPause() {
-			timeWhenStopped = mChronometer.getBase()
-					- SystemClock.elapsedRealtime();
-			mChronometer.stop();
-			Log.e("Activity Play", "Entered onPause()");
-			super.onPause();
-		}
-
-		@Override
-		public void onResume() {
-			mChronometer.setBase(SystemClock.elapsedRealtime()
-					+ timeWhenStopped);
-			mChronometer.start();
-			Log.e("Activity Play", "Entered onResume()");
-			super.onResume();
-		}
+		// @Override
+		// public void onPause() {
+		// timeWhenStopped = mChronometer.getBase()
+		// - SystemClock.elapsedRealtime();
+		// mChronometer.stop();
+		// Log.e("Activity Play", "Entered onPause()");
+		// super.onPause();
+		// }
+		//
+		// @Override
+		// public void onResume() {
+		// mChronometer.setBase(SystemClock.elapsedRealtime()
+		// + timeWhenStopped);
+		// mChronometer.start();
+		// Log.e("Activity Play", "Entered onResume()");
+		// super.onResume();
+		// }
 
 	}
 

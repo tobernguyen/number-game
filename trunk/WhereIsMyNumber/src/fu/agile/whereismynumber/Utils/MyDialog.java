@@ -53,9 +53,9 @@ public class MyDialog extends Dialog {
 		menuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
-				Intent goToMenu = new Intent(mContext, MainScreen.class);
+				dismiss();
 				((Activity) mContext).finish();
+				Intent goToMenu = new Intent(mContext, MainScreen.class);
 				mContext.startActivity(goToMenu);
 
 			}
@@ -63,7 +63,7 @@ public class MyDialog extends Dialog {
 		playBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-
+				dismiss();
 				((Activity) mContext).finish();
 				mContext.startActivity(((Activity) mContext).getIntent());
 
@@ -72,5 +72,33 @@ public class MyDialog extends Dialog {
 		});
 		show();
 
+	}
+
+	public void showDialogPauseGame(Bundle gameSetting) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.pause_dialog);
+		getWindow().setBackgroundDrawable(
+				new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		ImageView playBtn = (ImageView) findViewById(R.id.play_btn);
+		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
+
+		setCancelable(true);
+		setCanceledOnTouchOutside(false);
+		menuBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				dismiss();
+				((Activity) mContext).finish();
+
+			}
+		});
+		playBtn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				dismiss();
+			}
+
+		});
+		show();
 	}
 }
