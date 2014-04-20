@@ -27,8 +27,8 @@ import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Adapter.NumberAdapter;
 import fu.agile.whereismynumber.Adapter.ViewHolderItem;
 import fu.agile.whereismynumber.Enquity.Config;
+import fu.agile.whereismynumber.Enquity.MyData;
 import fu.agile.whereismynumber.Enquity.Number;
-import fu.agile.whereismynumber.Enquity.StoreData;
 import fu.agile.whereismynumber.Utils.MyDialog;
 import fu.agile.whereismynumber.Utils.MySoundManager;
 
@@ -60,7 +60,7 @@ public class PlayActivity extends ActionBarActivity {
 		private Typeface fontForText;
 
 		// Bundle for game setting, get from MainScreen
-		private Bundle game_setting;
+		private Bundle gameSetting;
 		private int GAME_TYPE;
 
 		// Amount of numbers
@@ -90,9 +90,10 @@ public class PlayActivity extends ActionBarActivity {
 		// Variable of score time
 		private long time;
 		// variable to display highscore
-		private int highscore, score;
-		// Tao bien de store data
-		private StoreData store;
+		private int score;
+
+		// Variable for score
+		MyData scoreData;
 
 		// Animation holder
 		private Animation slide_left_out;
@@ -172,8 +173,8 @@ public class PlayActivity extends ActionBarActivity {
 					.setText(listNumberTarget.get(index).toString());
 
 			// Hien thi thoi gian tot nhat
-			highscore = store.getHighscore(GAME_TYPE, amountOfNumbers);
-			bestScoreTextView.setText(store.getTimeFromMiliseconds(highscore));
+			bestScoreTextView
+					.setText(scoreData.getBestScoreString(gameSetting));
 		}
 
 		private void initiateGamePlay() {
@@ -210,7 +211,7 @@ public class PlayActivity extends ActionBarActivity {
 			mContext = getActivity();
 			soundManager = new MySoundManager(mContext);
 			dialogManager = new MyDialog(mContext);
-			store = new StoreData(mContext, GAME_TYPE, amountOfNumbers);
+			scoreData = new MyData(mContext);
 		}
 
 		private void getReferenceToView(View currentView) {
@@ -235,17 +236,17 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void getGameSetting() {
 			// Lay du dieu ve chieu dai va rong cua ma tran
-			game_setting = ((Activity) mContext).getIntent().getBundleExtra(
+			gameSetting = ((Activity) mContext).getIntent().getBundleExtra(
 					"GAME_SETTING");
-			GAME_TYPE = game_setting.getInt("GAME_TYPE", 3);
+			GAME_TYPE = gameSetting.getInt("GAME_TYPE", 3);
 		}
 
 		private void getMatrixSize() {
 			// Tinh toan tong so chu so
-			amountOfNumbers = game_setting.getInt("A", 6)
-					* game_setting.getInt("B", 8);
+			amountOfNumbers = gameSetting.getInt("X", 6)
+					* gameSetting.getInt("Y", 8);
 
-			numberOfColumns = game_setting.getInt("A", 6);
+			numberOfColumns = gameSetting.getInt("X", 6);
 		}
 
 		private void createGridNumberList() {
@@ -292,10 +293,15 @@ public class PlayActivity extends ActionBarActivity {
 
 			score = seconds + minutes * 60;
 
-			store.setHighscore(score, GAME_TYPE, amountOfNumbers);
+			// Check whether user make new best time
+			boolean isNewBest = scoreData.isNewBestScore(gameSetting, score);
+
+			if (isNewBest) {
+				scoreData.setBestScore(gameSetting, score);
+			}
 
 			// Show dialog when end game
-			dialogManager.showDialogEndGame(score, highscore);
+			dialogManager.showDialogEndGame(gameSetting, score, isNewBest);
 		}
 
 		private void printNextTargetNumber() {
