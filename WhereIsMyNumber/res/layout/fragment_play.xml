@@ -18,6 +18,7 @@
         android:weightSum="3" >
 
         <ImageView
+            android:id="@+id/pauseImageView"
             android:layout_width="106dp"
             android:layout_height="106dp"
             android:src="@drawable/pause_btn" />
