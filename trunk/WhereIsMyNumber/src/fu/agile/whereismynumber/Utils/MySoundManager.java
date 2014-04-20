@@ -1,16 +1,15 @@
 package fu.agile.whereismynumber.Utils;
 
-import java.util.HashMap;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.util.SparseIntArray;
 import fu.agile.whereismynumber.R;
 
 public class MySoundManager {
 	private SoundPool mSoundPool;
 	private AudioManager mAudioManager;
-	private HashMap<Integer, Integer> mSoundPoolMap;
+	private SparseIntArray mSoundPoolMap;
 	public final static int RIGHT_ANWSER_SOUND = 1;
 	public final static int WRONG_ANSWER_SONUD = 2;
 
@@ -19,7 +18,7 @@ public class MySoundManager {
 		mSoundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
 		mAudioManager = (AudioManager) context
 				.getSystemService(Context.AUDIO_SERVICE);
-		mSoundPoolMap = new HashMap<Integer, Integer>();
+		mSoundPoolMap = new SparseIntArray();
 
 		// load fx
 		mSoundPoolMap.put(RIGHT_ANWSER_SOUND,
