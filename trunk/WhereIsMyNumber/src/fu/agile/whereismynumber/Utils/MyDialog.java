@@ -35,8 +35,13 @@ public class MyDialog extends Dialog {
 		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
 		mscore = (TextView) findViewById(R.id.curent_score);
 		mhighscore = (TextView) findViewById(R.id.best_score);
-		mscore.setText("" + score);
-		mhighscore.setText("" + highscore);
+		if (score < highscore) {
+			mscore.setText("" + score);
+			mhighscore.setText("" + score);
+		} else {
+			mscore.setText("" + score);
+			mhighscore.setText("" + highscore);
+		}
 		setCancelable(false);
 		setCanceledOnTouchOutside(false);
 		menuBtn.setOnClickListener(new View.OnClickListener() {
