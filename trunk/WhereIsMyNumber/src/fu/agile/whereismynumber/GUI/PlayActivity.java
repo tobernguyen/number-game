@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,6 +24,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Chronometer;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Adapter.NumberAdapter;
@@ -48,15 +51,17 @@ public class PlayActivity extends ActionBarActivity {
 		}
 	}
 
+
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
+
 		// Variables for MyDialog
 		private MyDialog dialogManager;
 
 		// Custom font for X character
-		private Typeface X_font;
+		// private Typeface X_font;
 		private Typeface fontForText;
 
 		// Bundle for game setting, get from MainScreen
@@ -78,11 +83,13 @@ public class PlayActivity extends ActionBarActivity {
 
 		// Variable to handle Views
 		private GridView gridNumber;
+		private ImageView pauseImageView;
 		private TextView targetNumberTextView;
 		private TextView bestScoreTextView;
 
 		// The method of android to display stop watch
 		private Chronometer mChronometer;
+		private long timeWhenStopped;
 
 		// Number of column to divide
 		private int numberOfColumns;
@@ -104,6 +111,7 @@ public class PlayActivity extends ActionBarActivity {
 
 		// Context
 		private Context mContext;
+
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -130,17 +138,17 @@ public class PlayActivity extends ActionBarActivity {
 				public void onItemClick(AdapterView<?> arg0, View view,
 						int position, long id) {
 					// Kiem tra xem so nguoi dung click vao co dung khong
-					Number clickedNumber = (Number) numbers_adapter
-							.getItem(position);
-					if (clickedNumber.equals(listNumberTarget.get(index))) {
+					TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
+
+					if (mTextView.getText().toString()
+							.equals(targetNumberTextView.getText().toString())) {
 						// Play right_sound
 						soundManager.play(MySoundManager.RIGHT_ANWSER_SOUND);
 
 						// Chuyen thanh dau X
-						TextView mTextView = ((ViewHolderItem) view.getTag()).textViewItem;
-						mTextView.setTypeface(X_font);
+						// mTextView.setTypeface(X_font);
 						mTextView.setTextColor(Color.RED);
-						mTextView.setTextSize(70);
+						// mTextView.setTextSize(70);
 						mTextView.setText("X");
 
 						try {
@@ -188,8 +196,8 @@ public class PlayActivity extends ActionBarActivity {
 		}
 
 		private void loadFont() {
-			X_font = Typeface.createFromAsset(mContext.getAssets(),
-					Config.Font.RIGHT_ANSWER_TEXT_FONT);
+			// X_font = Typeface.createFromAsset(mContext.getAssets(),
+			// Config.Font.RIGHT_ANSWER_TEXT_FONT);
 			fontForText = Typeface.createFromAsset(mContext.getAssets(),
 					Config.Font.PLAY_ACTIVITY_TEXTVIEW_FONT);
 		}
@@ -222,6 +230,16 @@ public class PlayActivity extends ActionBarActivity {
 					.findViewById(R.id.targetNumberTextView);
 			bestScoreTextView = (TextView) currentView
 					.findViewById(R.id.bestScoreTextView);
+			pauseImageView = (ImageView) currentView
+					.findViewById(R.id.pauseImageView);
+
+			pauseImageView.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					dialogManager.showDialogPauseGame(gameSetting);
+				}
+			});
 
 			// Set custom font for system static TextView
 			setFont(currentView);
@@ -315,6 +333,24 @@ public class PlayActivity extends ActionBarActivity {
 
 		private void increaseIndex() {
 			index++;
+		}
+
+		@Override
+		public void onPause() {
+			timeWhenStopped = mChronometer.getBase()
+					- SystemClock.elapsedRealtime();
+			mChronometer.stop();
+			Log.e("Activity Play", "Entered onPause()");
+			super.onPause();
+		}
+
+		@Override
+		public void onResume() {
+			mChronometer.setBase(SystemClock.elapsedRealtime()
+					+ timeWhenStopped);
+			mChronometer.start();
+			Log.e("Activity Play", "Entered onResume()");
+			super.onResume();
 		}
 
 	}
