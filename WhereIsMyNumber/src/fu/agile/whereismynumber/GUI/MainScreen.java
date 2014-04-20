@@ -47,19 +47,13 @@ public class MainScreen extends ActionBarActivity {
 		Bundle game_setting;
 		private TextView displayScore;
 		private StoreData store;
-		private int mode, size;
+		private int mode = 1, size = 36, highscore;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			final View rootView = inflater.inflate(
 					R.layout.fragment_main_screen, container, false);
-
-			// Khoi tao kieu choi mac dinh
-			mode = 3;
-			size = 48;
-
-
 
 			// Get resources
 			playButton = (Button) rootView.findViewById(R.id.playButton);
@@ -80,7 +74,7 @@ public class MainScreen extends ActionBarActivity {
 			// Get references to playSize_radioGroup
 			playTypeRadio = (RadioGroup) rootView
 					.findViewById(R.id.playType_radioGroup);
-
+			updateBestScoreTextView(mode, size);
 			matrixSizeRadio
 					.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 						@Override
@@ -171,11 +165,6 @@ public class MainScreen extends ActionBarActivity {
 				goToPlayActivity.putExtra("GAME_SETTING", game_setting);
 				startActivity(goToPlayActivity);
 				break;
-			// case R.id.highScoreButton:
-			// // Intent for High Score Button
-			// Intent goToHighScoreActivity = new Intent(getActivity(),
-			// HighScoreActivity.class);
-			// startActivity(goToHighScoreActivity);
 
 			}
 
@@ -183,7 +172,7 @@ public class MainScreen extends ActionBarActivity {
 
 		private void updateBestScoreTextView(int mode, int size) {
 			store = new StoreData(getActivity(), mode, size);
-			int highscore = store.getHighscore(mode, size);
+			highscore = store.getHighscore(mode, size);
 			if (highscore == 99999) {
 				displayScore.setText("Best: " + 0);
 			} else {
