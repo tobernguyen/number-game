@@ -55,11 +55,11 @@ public class MainScreen extends ActionBarActivity {
 			final View rootView = inflater.inflate(
 					R.layout.fragment_main_screen, container, false);
 
-<<<<<<< .mine			// Khoi tao kieu choi mac dinh
+			// Khoi tao kieu choi mac dinh
 			mode = 3;
 			size = 48;
 
-=======>>>>>>> .theirs			// Get resources
+			// Get resources
 			playButton = (Button) rootView.findViewById(R.id.playButton);
 			game_setting = new Bundle();
 			displayScore = (TextView) rootView
@@ -178,7 +178,8 @@ public class MainScreen extends ActionBarActivity {
 			store = new StoreData(getActivity(), mode, size);
 			highscore = store.getHighscore(mode, size);
 
-			displayScore.setText("Best time: " + store.getTimeFromMiliseconds(highscore));
+			displayScore.setText("Best time: "
+					+ store.getTimeFromMiliseconds(highscore));
 
 			// if (highscore == 99999) {
 			// displayScore.setText("Best: " + 0);
