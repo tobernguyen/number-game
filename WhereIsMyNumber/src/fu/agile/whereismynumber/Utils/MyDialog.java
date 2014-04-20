@@ -5,11 +5,13 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
+import fu.agile.whereismynumber.Enquity.MyData;
 import fu.agile.whereismynumber.GUI.MainScreen;
 
 public class MyDialog extends Dialog {
@@ -25,7 +27,8 @@ public class MyDialog extends Dialog {
 	/*
 	 * Dialog for end game
 	 */
-	public void showDialogEndGame(int score, int highscore) {
+	public void showDialogEndGame(Bundle gameSetting, long score,
+			boolean isNewBest) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setBackgroundDrawable(
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
@@ -35,13 +38,16 @@ public class MyDialog extends Dialog {
 		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
 		mscore = (TextView) findViewById(R.id.curent_score);
 		mhighscore = (TextView) findViewById(R.id.best_score);
-		if (score < highscore) {
-			mscore.setText("" + score);
-			mhighscore.setText("" + score);
-		} else {
-			mscore.setText("" + score);
-			mhighscore.setText("" + highscore);
+
+		MyData scoreData = new MyData((Activity) mContext);
+
+		mscore.setText(scoreData.milisecondsToString(score));
+		mhighscore.setText(scoreData.getBestScoreString(gameSetting));
+
+		if (isNewBest) {
+			// TODO : implement notify that user make new best
 		}
+
 		setCancelable(false);
 		setCanceledOnTouchOutside(false);
 		menuBtn.setOnClickListener(new View.OnClickListener() {

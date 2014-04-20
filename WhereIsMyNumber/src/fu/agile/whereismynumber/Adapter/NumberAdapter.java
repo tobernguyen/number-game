@@ -3,11 +3,9 @@ package fu.agile.whereismynumber.Adapter;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,11 +19,10 @@ public class NumberAdapter extends BaseAdapter {
 
 	private Context context;
 	private ArrayList<Number> numbers;
-	private int screen_width, cellSize;
+	/* private int screen_width, cellSize; */
 	private Typeface font_for_number_on_grid;
 	private int backGround_1;
 	private int backGround_2;
-
 	public NumberAdapter(Context context, ArrayList<Number> numbers,
 			int numberOfColumns) {
 		super();
@@ -39,14 +36,16 @@ public class NumberAdapter extends BaseAdapter {
 		// Shuffle number list
 		Collections.shuffle(numbers);
 
-		DisplayMetrics displaymetrics = new DisplayMetrics();
-		((Activity) context).getWindowManager().getDefaultDisplay()
-				.getMetrics(displaymetrics);
-
-		screen_width = displaymetrics.widthPixels;
-
-		// Tuy chinh cellSize dua theo kich thuoc man hinh va so cot
-		cellSize = screen_width / numberOfColumns;
+		/*
+		 * DisplayMetrics displaymetrics = new DisplayMetrics(); ((Activity)
+		 * context).getWindowManager().getDefaultDisplay()
+		 * .getMetrics(displaymetrics);
+		 * 
+		 * screen_width = displaymetrics.widthPixels;
+		 * 
+		 * // Tuy chinh cellSize dua theo kich thuoc man hinh va so cot cellSize
+		 * = screen_width / numberOfColumns;
+		 */
 
 		// Get drawable ID
 		backGround_1 = R.drawable.stroke;
