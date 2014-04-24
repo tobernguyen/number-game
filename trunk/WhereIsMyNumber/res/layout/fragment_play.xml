@@ -99,8 +99,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@android:color/white" >
                 </TextView>
-
-                <Chronometer
+                <fu.agile.whereismynumber.Utils.MyChronometer
                     android:id="@+id/chronometer"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

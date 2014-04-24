@@ -8,7 +8,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
@@ -21,7 +20,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Chronometer;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,10 +29,23 @@ import fu.agile.whereismynumber.Adapter.ViewHolderItem;
 import fu.agile.whereismynumber.Enquity.Config;
 import fu.agile.whereismynumber.Enquity.MyData;
 import fu.agile.whereismynumber.Enquity.Number;
+import fu.agile.whereismynumber.Utils.MyChronometer;
 import fu.agile.whereismynumber.Utils.MyDialog;
 import fu.agile.whereismynumber.Utils.MySoundManager;
 
 public class PlayActivity extends ActionBarActivity {
+	// Variables to detect Pause
+	boolean isFromPause = false;
+
+	// Variables for MyDialog
+	public static MyDialog dialogManager;
+
+	// Bundle for game setting, get from MainScreen
+	private static Bundle gameSetting;
+	private static int GAME_TYPE;
+
+	// The method of android to display stop watch
+	private static MyChronometer mChronometer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +61,13 @@ public class PlayActivity extends ActionBarActivity {
 		}
 	}
 
-
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
 	public static class PlaceholderFragment extends Fragment {
-
-		// Variables for MyDialog
-		private MyDialog dialogManager;
-
 		// Custom font for X character
 		// private Typeface X_font;
 		private Typeface fontForText;
-
-		// Bundle for game setting, get from MainScreen
-		private Bundle gameSetting;
-		private int GAME_TYPE;
 
 		// Amount of numbers
 		private int amountOfNumbers;
@@ -86,17 +88,11 @@ public class PlayActivity extends ActionBarActivity {
 		private TextView targetNumberTextView;
 		private TextView bestScoreTextView;
 
-		// The method of android to display stop watch
-		private Chronometer mChronometer;
-		// private long timeWhenStopped;
-
 		// Number of column to divide
 		private int numberOfColumns;
 
-		// Variable of score time
-		private long time;
 		// variable to display highscore
-		private int score;
+		private long score;
 
 		// Variable for score
 		MyData scoreData;
@@ -110,7 +106,6 @@ public class PlayActivity extends ActionBarActivity {
 
 		// Context
 		private Context mContext;
-
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -222,7 +217,7 @@ public class PlayActivity extends ActionBarActivity {
 		}
 
 		private void getReferenceToView(View currentView) {
-			mChronometer = (Chronometer) currentView
+			mChronometer = (MyChronometer) currentView
 					.findViewById(R.id.chronometer);
 			gridNumber = (GridView) currentView.findViewById(R.id.gridView);
 			targetNumberTextView = (TextView) currentView
@@ -236,8 +231,9 @@ public class PlayActivity extends ActionBarActivity {
 
 				@Override
 				public void onClick(View v) {
-					dialogManager.showDialogPauseGame(gameSetting);
+					gamePause();
 				}
+
 			});
 
 			// Set custom font for system static TextView
@@ -299,16 +295,19 @@ public class PlayActivity extends ActionBarActivity {
 		}
 
 		private void gameStop() {
-			// Dung do ho dem gio
-			mChronometer.stop();
+			// // Dung do ho dem gio
+			// mChronometer.stop();
+			//
+			// // Lay thoi gian cua lan choi do
+			// time = SystemClock.elapsedRealtime() - mChronometer.getBase();
+			// int hours = (int) (time / 3600000);
+			// int minutes = (int) (time - hours * 3600000) / 60000;
+			// int seconds = (int) (time - hours * 3600000 - minutes * 60000) /
+			// 1000;
+			//
+			// score = seconds + minutes * 60;
 
-			// Lay thoi gian cua lan choi do
-			time = SystemClock.elapsedRealtime() - mChronometer.getBase();
-			int hours = (int) (time / 3600000);
-			int minutes = (int) (time - hours * 3600000) / 60000;
-			int seconds = (int) (time - hours * 3600000 - minutes * 60000) / 1000;
-
-			score = seconds + minutes * 60;
+			score = mChronometer.stopAndGetTimeInSeconds();
 
 			// Check whether user make new best time
 			boolean isNewBest = scoreData.isNewBestScore(gameSetting, score);
@@ -334,24 +333,33 @@ public class PlayActivity extends ActionBarActivity {
 			index++;
 		}
 
-		// @Override
-		// public void onPause() {
-		// timeWhenStopped = mChronometer.getBase()
-		// - SystemClock.elapsedRealtime();
-		// mChronometer.stop();
-		// Log.e("Activity Play", "Entered onPause()");
-		// super.onPause();
-		// }
-		//
-		// @Override
-		// public void onResume() {
-		// mChronometer.setBase(SystemClock.elapsedRealtime()
-		// + timeWhenStopped);
-		// mChronometer.start();
-		// Log.e("Activity Play", "Entered onResume()");
-		// super.onResume();
-		// }
-
 	}
 
+	@Override
+	protected void onPause() {
+		isFromPause = true;
+		mChronometer.pause();
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		if (isFromPause)
+			dialogManager.showDialogPauseGame(gameSetting);
+		super.onResume();
+	}
+
+	@Override
+	public void onBackPressed() {
+		gamePause();
+	}
+
+	private static void gamePause() {
+		mChronometer.pause();
+		dialogManager.showDialogPauseGame(gameSetting);
+	}
+
+	public static void resumeGame() {
+		mChronometer.resume();
+	}
 }
