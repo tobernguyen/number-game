@@ -22,6 +22,7 @@ public class MyDialog extends Dialog {
 	public MyDialog(Context context) {
 		super(context);
 		mContext = context;
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 	}
 
 	/*
@@ -29,7 +30,6 @@ public class MyDialog extends Dialog {
 	 */
 	public void showDialogEndGame(Bundle gameSetting, long score,
 			boolean isNewBest) {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setBackgroundDrawable(
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		setContentView(R.layout.gameover);
@@ -75,7 +75,6 @@ public class MyDialog extends Dialog {
 	}
 
 	public void showDialogPauseGame(Bundle gameSetting) {
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.pause_dialog);
 		getWindow().setBackgroundDrawable(
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
