@@ -13,6 +13,7 @@ import android.widget.TextView;
 import fu.agile.whereismynumber.R;
 import fu.agile.whereismynumber.Enquity.MyData;
 import fu.agile.whereismynumber.GUI.MainScreen;
+import fu.agile.whereismynumber.GUI.PlayActivity;
 
 public class MyDialog extends Dialog {
 	private TextView mscore;
@@ -81,7 +82,7 @@ public class MyDialog extends Dialog {
 		ImageView playBtn = (ImageView) findViewById(R.id.play_btn);
 		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
 
-		setCancelable(true);
+		setCancelable(false);
 		setCanceledOnTouchOutside(false);
 		menuBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -95,6 +96,7 @@ public class MyDialog extends Dialog {
 			@Override
 			public void onClick(View view) {
 				dismiss();
+				PlayActivity.resumeGame();
 			}
 
 		});
