@@ -7,6 +7,8 @@ import android.widget.Chronometer;
 
 public class MyChronometer extends Chronometer {
 
+	boolean isPaused = false;
+
 	public MyChronometer(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		// TODO Auto-generated constructor stub
@@ -33,12 +35,18 @@ public class MyChronometer extends Chronometer {
 	}
 
 	public void pause() {
-		timeWhenStopped = getBase() - SystemClock.elapsedRealtime();
-		stop();
+		if (!isPaused) {
+			isPaused = true;
+			timeWhenStopped = getBase() - SystemClock.elapsedRealtime();
+			stop();
+		}
 	}
 
 	public void resume() {
-		setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
-		start();
+		if (isPaused) {
+			setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
+			start();
+			isPaused = false;
+		}
 	}
 }
