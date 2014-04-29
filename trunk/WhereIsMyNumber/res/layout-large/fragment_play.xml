@@ -45,7 +45,7 @@
                 android:gravity="center"
                 android:text="1"
                 android:textColor="@android:color/white"
-                android:textSize="60sp" />
+                android:textSize="50sp" />
         </RelativeLayout>
 
         <LinearLayout
@@ -72,7 +72,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="Best Time"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" >
                 </TextView>
 
@@ -83,7 +83,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="00:00"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" >
                 </TextView>
             </LinearLayout>
@@ -105,7 +105,7 @@
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:text="Your Time"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" >
                 </TextView>
 
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@android:color/white" />
             </LinearLayout>
         </LinearLayout>
