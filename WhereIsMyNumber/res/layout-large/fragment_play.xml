@@ -1,0 +1,137 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/play_bg"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="fu.agile.whereismynumber.PlayActivity$PlaceholderFragment" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="3" >
+
+        <ImageView
+            android:id="@+id/pauseImageView"
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/pause_btn" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:layout_width="106dp"
+                android:layout_height="106dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/target_number_bg" />
+
+            <TextView
+                android:id="@+id/targetNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@android:color/white"
+                android:textSize="60sp" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="106dp"
+            android:layout_height="106dp"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:weightSum="2" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="51.25dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/best_score_bg"
+                android:orientation="vertical"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/bestTimeTitleTv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Best Time"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" >
+                </TextView>
+
+                <TextView
+                    android:id="@+id/bestScoreTextView"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="00:00"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" >
+                </TextView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="51.25dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="3.5dp"
+                android:layout_weight="1"
+                android:background="@drawable/current_score_bg"
+                android:orientation="vertical"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/currentTimeTitleTv"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:text="Your Time"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" >
+                </TextView>
+
+                <fu.agile.whereismynumber.Utils.MyChronometer
+                    android:id="@+id/chronometer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0.7dp"
+        android:layout_marginTop="10dp"
+        android:horizontalSpacing="6dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="6"
+        android:scrollbarAlwaysDrawVerticalTrack="false"
+        android:verticalSpacing="6dp" >
+    </GridView>
+
+</LinearLayout>

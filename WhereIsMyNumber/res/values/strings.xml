@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Where is my number?</string>
+    <string name="app_name">Freaking Number !</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_select_play_type">Select Play Type</string>
     <string name="title_activity_select_difficult_level">Select Difficult Level</string>

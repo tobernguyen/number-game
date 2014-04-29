@@ -23,6 +23,9 @@ public class NumberAdapter extends BaseAdapter {
 	private Typeface font_for_number_on_grid;
 	private int backGround_1;
 	private int backGround_2;
+
+	private int cellSize;
+
 	public NumberAdapter(Context context, ArrayList<Number> numbers,
 			int numberOfColumns) {
 		super();
@@ -36,16 +39,15 @@ public class NumberAdapter extends BaseAdapter {
 		// Shuffle number list
 		Collections.shuffle(numbers);
 
-		/*
-		 * DisplayMetrics displaymetrics = new DisplayMetrics(); ((Activity)
-		 * context).getWindowManager().getDefaultDisplay()
-		 * .getMetrics(displaymetrics);
-		 * 
-		 * screen_width = displaymetrics.widthPixels;
-		 * 
-		 * // Tuy chinh cellSize dua theo kich thuoc man hinh va so cot cellSize
-		 * = screen_width / numberOfColumns;
-		 */
+		// DisplayMetrics displaymetrics = new DisplayMetrics();
+		// ((Activity) context).getWindowManager().getDefaultDisplay()
+		// .getMetrics(displaymetrics);
+		//
+		// int screen_width = displaymetrics.widthPixels;
+		// int screen_heigh = displaymetrics.heightPixels;
+		//
+		// Tuy chinh cellSize dua theo kich thuoc man hinh va so cot cellSize
+		// cellSize = screen_width / numberOfColumns;
 
 		// Get drawable ID
 		backGround_1 = R.drawable.stroke;

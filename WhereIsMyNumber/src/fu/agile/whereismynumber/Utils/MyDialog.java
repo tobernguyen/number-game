@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
@@ -11,13 +12,13 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 import fu.agile.whereismynumber.R;
+import fu.agile.whereismynumber.Enquity.Config;
 import fu.agile.whereismynumber.Enquity.MyData;
 import fu.agile.whereismynumber.GUI.MainScreen;
 import fu.agile.whereismynumber.GUI.PlayActivity;
 
 public class MyDialog extends Dialog {
-	private TextView mscore;
-	private TextView mhighscore;
+
 	private Context mContext;
 
 	public MyDialog(Context context) {
@@ -37,10 +38,22 @@ public class MyDialog extends Dialog {
 
 		ImageView playBtn = (ImageView) findViewById(R.id.play_btn);
 		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
-		mscore = (TextView) findViewById(R.id.curent_score);
-		mhighscore = (TextView) findViewById(R.id.best_score);
+		TextView mscore = (TextView) findViewById(R.id.curent_score);
+		TextView mhighscore = (TextView) findViewById(R.id.best_score);
+		TextView gameover_txt = (TextView) findViewById(R.id.gameover_txt);
+		TextView you_txt = (TextView) findViewById(R.id.you_txt);
+		TextView best_txt = (TextView) findViewById(R.id.best_txt);
 
 		MyData scoreData = new MyData((Activity) mContext);
+
+		Typeface customfont;
+		customfont = Typeface.createFromAsset(mContext.getAssets(),
+				Config.Font.MAIN_SCREEN_FONT);
+		mscore.setTypeface(customfont);
+		mhighscore.setTypeface(customfont);
+		gameover_txt.setTypeface(customfont);
+		you_txt.setTypeface(customfont);
+		best_txt.setTypeface(customfont);
 
 		mscore.setText(scoreData.milisecondsToString(score));
 		mhighscore.setText(scoreData.getBestScoreString(gameSetting));
@@ -81,6 +94,13 @@ public class MyDialog extends Dialog {
 				new ColorDrawable(android.graphics.Color.TRANSPARENT));
 		ImageView playBtn = (ImageView) findViewById(R.id.play_btn);
 		ImageView menuBtn = (ImageView) findViewById(R.id.menu_btn);
+
+		TextView pause_txt = (TextView) findViewById(R.id.pause_txt);
+
+		Typeface customfont;
+		customfont = Typeface.createFromAsset(mContext.getAssets(),
+				Config.Font.MAIN_SCREEN_FONT);
+		pause_txt.setTypeface(customfont);
 
 		setCancelable(false);
 		setCanceledOnTouchOutside(false);
