@@ -148,7 +148,7 @@ public class PlayActivity extends ActionBarActivity {
 			numbers_adapter = new NumberAdapter(mContext, listNumberDisplay,
 					numberOfColumns);
 			gridNumber.setAdapter(numbers_adapter);
-
+			gridNumber.setSoundEffectsEnabled(false);
 			// OnClick for gridNumber
 			gridNumber.setOnItemClickListener(new OnItemClickListener() {
 
@@ -223,6 +223,7 @@ public class PlayActivity extends ActionBarActivity {
 		private void setFont(View currentView) {
 			mChronometer.setTypeface(fontForText);
 			targetNumberTextView.setTypeface(fontForText);
+			bestScoreTextView.setTypeface(fontForText);
 
 			TextView bestTimeTitleTv = (TextView) currentView
 					.findViewById(R.id.bestTimeTitleTv);

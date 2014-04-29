@@ -4,25 +4,16 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#293C4D"
+    android:gravity="center"
     tools:context="fu.agile.whereismynumber.MainScreen$PlaceholderFragment" >
-
-    <Button
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp"
-        android:background="@drawable/button_play_press"
-        android:padding="0dp"
-        android:src="@drawable/play_button_up" />
 
     <RadioGroup
         android:id="@+id/playSize_radioGroup"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/playButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="290dp"
+        android:layout_marginTop="0dp"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -82,14 +73,31 @@
         android:id="@+id/displayHighscore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@id/playType_radioGroup"
-        android:layout_marginTop="27dp"
+        android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text=""
+        android:text="1"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="#FFFFFF"
         android:textSize="35dp" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/logo" />
+
+    <Button
+        android:id="@+id/playButton"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:background="@drawable/button_play_press"
+        android:padding="0dp"
+        android:src="@drawable/play_button_up" />
 
 </RelativeLayout>
