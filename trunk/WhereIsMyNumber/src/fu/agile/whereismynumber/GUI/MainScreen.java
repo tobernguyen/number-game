@@ -1,7 +1,9 @@
 package fu.agile.whereismynumber.GUI;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -10,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RadioGroup;
@@ -25,9 +26,6 @@ public class MainScreen extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_main_screen);
 
 		if (savedInstanceState == null) {
@@ -35,6 +33,29 @@ public class MainScreen extends ActionBarActivity {
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
 
+	}
+
+	/*
+	 * Hide Status Bar and Action Bar
+	 */
+	@SuppressLint("NewApi")
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (Build.VERSION.SDK_INT < 16) {
+			// Hide the status bar
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			// Hide the action bar
+			getSupportActionBar().hide();
+		} else {
+			// Hide the status bar
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_FULLSCREEN);
+			// Hide the action bar
+			getActionBar().hide();
+		}
 	}
 
 	/**

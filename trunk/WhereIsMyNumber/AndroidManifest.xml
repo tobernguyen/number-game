@@ -23,14 +23,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="fu.agile.whereismynumber.GUI.SelectPlayType"
-            android:label="@string/title_activity_select_play_type"
-            android:parentActivityName="fu.agile.whereismynumber.GUI.MainScreen" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="fu.agile.whereismynumber.GUI.MainScreen" />
-        </activity>
-        <activity
             android:name="fu.agile.whereismynumber.GUI.PlayActivity"
             android:label="@string/title_activity_play" >
         </activity>
