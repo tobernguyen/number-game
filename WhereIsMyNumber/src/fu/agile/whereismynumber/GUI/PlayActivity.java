@@ -3,10 +3,12 @@ package fu.agile.whereismynumber.GUI;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -33,6 +34,7 @@ import fu.agile.whereismynumber.Utils.MyChronometer;
 import fu.agile.whereismynumber.Utils.MyDialog;
 import fu.agile.whereismynumber.Utils.MySoundManager;
 
+@SuppressLint("NewApi")
 public class PlayActivity extends ActionBarActivity {
 	// Variables to detect Pause
 	boolean isFromPause = false;
@@ -47,18 +49,43 @@ public class PlayActivity extends ActionBarActivity {
 	// The method of android to display stop watch
 	private static MyChronometer mChronometer;
 
+	// Context
+	private static Context mContext;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.activity_play);
 
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
+	}
+
+	/*
+	 * Hide Status Bar and Action Bar
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+
+		if (Build.VERSION.SDK_INT < 16) {
+			// Hide the status bar
+			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			// Hide the action bar
+			getSupportActionBar().hide();
+		} else {
+			// Hide the status bar
+			getWindow().getDecorView().setSystemUiVisibility(
+					View.SYSTEM_UI_FLAG_FULLSCREEN);
+			// Hide the action bar
+			getActionBar().hide();
+		}
+
+		if (isFromPause)
+			dialogManager.showDialogPauseGame(gameSetting);
 	}
 
 	/**
@@ -103,9 +130,6 @@ public class PlayActivity extends ActionBarActivity {
 
 		// Variable for sound
 		private MySoundManager soundManager;
-
-		// Context
-		private Context mContext;
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -343,13 +367,6 @@ public class PlayActivity extends ActionBarActivity {
 	}
 
 	@Override
-	protected void onResume() {
-		if (isFromPause)
-			dialogManager.showDialogPauseGame(gameSetting);
-		super.onResume();
-	}
-
-	@Override
 	public void onBackPressed() {
 		gamePause();
 	}
@@ -360,6 +377,18 @@ public class PlayActivity extends ActionBarActivity {
 	}
 
 	public static void resumeGame() {
+		if (Build.VERSION.SDK_INT < 16) {
+			// Hide the status bar
+			((Activity) mContext).getWindow().setFlags(
+					WindowManager.LayoutParams.FLAG_FULLSCREEN,
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		} else {
+			// Hide the status bar
+			((Activity) mContext).getWindow().getDecorView()
+					.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
+		}
 		mChronometer.resume();
+
 	}
+
 }
