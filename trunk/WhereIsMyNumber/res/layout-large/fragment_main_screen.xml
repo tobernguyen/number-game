@@ -29,8 +29,8 @@
 
         <RadioButton
             android:id="@+id/play_6x6_rbtn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="59dp"
+            android:layout_height="match_parent"
             android:background="@drawable/radiobutton66_selector"
             android:button="@android:color/transparent"
             android:checked="true"
@@ -38,9 +38,10 @@
 
         <RadioButton
             android:id="@+id/play_6x8_rbtn"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="66dp"
+            android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
+            android:layout_weight="4.75"
             android:background="@drawable/radiobutton68_selector"
             android:button="@android:color/transparent"
             android:gravity="center_vertical|center_horizontal" />
