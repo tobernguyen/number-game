@@ -24,7 +24,7 @@ public class NumberAdapter extends BaseAdapter {
 	private int backGround_1;
 	private int backGround_2;
 
-	private int cellSize;
+	// private int cellSize;
 
 	public NumberAdapter(Context context, ArrayList<Number> numbers,
 			int numberOfColumns) {
