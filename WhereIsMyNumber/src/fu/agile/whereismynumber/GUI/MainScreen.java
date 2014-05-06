@@ -127,8 +127,9 @@ public class MainScreen extends ActionBarActivity {
 		private void updateBestScoreTextView() {
 			displayScore.setText("Best time: "
 					+ scoreData.getBestScoreString(gameSetting));
-			Log.e("BEST SCORE",
-					"BEST: " + scoreData.getBestScoreString(gameSetting));
+			if (false)
+				Log.e("BEST SCORE",
+						"BEST: " + scoreData.getBestScoreString(gameSetting));
 		}
 
 		@Override
