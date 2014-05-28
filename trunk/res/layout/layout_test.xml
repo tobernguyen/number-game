@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <AbsoluteLayout
+        android:layout_width="301dp"
+        android:layout_height="422dp"
+        android:layout_x="27dp"
+        android:layout_y="45dp"
+        android:background="#EEEEEE"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="267dp"
+            android:layout_height="326dp"
+            android:layout_x="14dp"
+            android:layout_y="82dp"
+            android:orientation="vertical" 
+            android:background="#FFFFFF">
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="91dp"
+            android:layout_y="19dp"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+    </AbsoluteLayout>
+
+    <Button
+        android:id="@+id/btnReset"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="24dp"
+        android:layout_y="466dp"
+        android:text="Reset" />
+
+    <Button
+        android:id="@+id/btnUndo"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="97dp"
+        android:layout_y="465dp"
+        android:text="Undo" />
+
+    <Button
+        android:id="@+id/btnHint"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="182dp"
+        android:layout_y="465dp"
+        android:text="Hint" />
+
+    <Button
+        android:id="@+id/btnCheck"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="250dp"
+        android:layout_y="465dp"
+        android:text="Check" />
+
+</AbsoluteLayout>
