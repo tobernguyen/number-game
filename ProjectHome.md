@@ -1,0 +1,1 @@
+A small game which you need to quickly choose the right number.
